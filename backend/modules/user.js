@@ -34,3 +34,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
   },
 });
+
+const UserEntity = mongoose.model("userEntity", userSchema);
+
+module.exports = UserEntity;
