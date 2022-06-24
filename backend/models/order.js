@@ -18,12 +18,12 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  isUnderCollection: {
+  isCollected: {
     type: Boolean,
     required: true,
     default: false,
   },
-  isCollected: {
+  isShipped: {
     type: Boolean,
     required: true,
     default: false,
