@@ -13,7 +13,7 @@ const getWorkAndSpecialization = async (req, res) => {
 const setWorkAndSpecialization = async (req, res) => {
   if (!req.body?.work || !req.body?.specialization)
     return res
-      .status(406)
+      .status(400)
       .json({ error: "Please provide work and specialization" });
   const user = await UserEntity.findById(res.locals.user.userId);
   user.workAndSpecialization.work = req.body.work;

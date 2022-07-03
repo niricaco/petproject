@@ -52,3 +52,4 @@ const itemSchema = new mongoose.Schema({
 const ItemEntity = mongoose.model("itemEntity", itemSchema);
 
 module.exports = ItemEntity;
+module.exports = itemSchema;

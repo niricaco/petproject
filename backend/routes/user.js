@@ -64,15 +64,12 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   }
 
   const key = `providers.${provider}`;
-  console.log(key);
   // console.log("openId: ", openId);
   let user = await User.findOne({ [key]: openId }); // already "registered" user in DB
-  console.log("res.locals.user.providers: ", res.locals.user?.providers);
   if (user && res.locals.user?.providers) {
     user.providers = { ...user.providers, ...res.locals.user.providers }; // append a new provider to its existing one
     user = await user.save();
   }
-  console.log("user: ", user);
 
   const sessionToken = jwt.sign(
     {

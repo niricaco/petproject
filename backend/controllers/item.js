@@ -5,14 +5,14 @@ const { findOneAndUpdate } = require("../models/company");
 const CompanyEntity = require("../models/company");
 
 const getAllItems = async (req, res) => {
-  if (!req.body?.companyid) return res.sendStatus(406);
+  if (!req.body?.companyid) return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyid);
   const items = company.items;
   res.status(200).json({ items });
 };
 
 const addItem = async (req, res) => {
-  if (!req.body?.companyid || !req.body?.item) return res.sendStatus(406);
+  if (!req.body?.companyid || !req.body?.item) return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyid);
   company.items.push(req.body.item);
   await company.save();
@@ -21,7 +21,7 @@ const addItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   if (!req.body?.companyid || !req.body?.item?.itemid)
-    return res.sendStatus(406);
+    return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyid);
   company.items.findOneAndUpdate(
     { itemid: req.body.item.itemid },
@@ -32,7 +32,7 @@ const updateItem = async (req, res) => {
 };
 
 const deleteItem = async (req, res) => {
-  if (!req.body?.companyid || !req.body?.itemid) return res.sendStatus(406);
+  if (!req.body?.companyid || !req.body?.itemid) return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyid);
   company.items.findOneAndDelete({ _id: req.body.itemid });
   await company.save();

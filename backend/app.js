@@ -24,6 +24,8 @@ const dashboardRoutes = require("./routes/dashboard");
 app.use("/api/dashboards", dashboardRoutes);
 const userRoutes = require("./routes/user.js");
 app.use("/api/user", userRoutes);
+const orderRoutes = require("./routes/order");
+app.use("/api/order", orderRoutes);
 
 app.get("/", (req, res) => {
   console.log("Health check completed");

@@ -1,7 +1,7 @@
 const router = require("../routes/dashboard");
 
 const createJob = async (req, res) => {
-  if (!req.body?.companyid || !req.body?.job) return res.sendStatus(406);
+  if (!req.body?.companyid || !req.body?.job) return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyid);
   company.jobs.push(req.body.job);
   await company.save();
@@ -9,7 +9,7 @@ const createJob = async (req, res) => {
 };
 
 const deleteJob = async (req, res) => {
-  if (!req.body?.companyid || !req.body?.jobid) return res.sendStatus(406);
+  if (!req.body?.companyid || !req.body?.jobid) return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyid);
   await company.jobs.findOneAndDelete({ _id: req.body.jobid });
   await company.save();

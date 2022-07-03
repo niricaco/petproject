@@ -4,12 +4,18 @@ const jwt = require("jsonwebtoken");
 const UserEntity = require("../models/user");
 
 const createUser = async (req, res) => {
-  if (!req.body?.username) return res.sendStatus(400);
+  if (!req.body?.username || !req.body?.firstname || !req.body?.lastname)
+    return res.sendStatus(400);
 
-  const user = await UserEntity.create({
+  const user = new UserEntity({
     username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     providers: res.locals.user.providers,
+    email: req.body.email,
   });
+  console.log("user before save", user);
+  await user.save();
 
   const sessionToken = jwt.sign(
     { userId: user._id, providers: user.providers },

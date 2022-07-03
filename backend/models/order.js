@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const itemSchema = require("./item");
 
 const orderSchema = new mongoose.Schema({
   orderNumber: {
@@ -37,7 +38,7 @@ const orderSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
-  detials: [],
+  details: [itemSchema],
   orderDate: {
     type: Date,
     required: true,
@@ -48,6 +49,4 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-const OrderEntity = mongoose.model("orderEntity", orderSchema);
-
-module.exports = OrderEntity;
+module.exports = orderSchema;

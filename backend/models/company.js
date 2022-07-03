@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const ItemEntity = require("../models/item");
+const itemSchema = require("../models/item");
+const orderSchema = require("./order");
 
 const roleSchema = new mongoose.Schema({
   superadmins: [
@@ -43,14 +44,12 @@ const companySchema = new mongoose.Schema({
     required: true,
   },
   roles: [roleSchema],
-  orders: [],
+  orders: [orderSchema],
   works: [],
   specializations: [],
-  items: [ItemEntity],
+  items: [itemSchema],
 });
 
 const CompanyEntity = mongoose.model("companyEntity", companySchema);
 
 module.exports = CompanyEntity;
-
-/* item schema or item model??? */

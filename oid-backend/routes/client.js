@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Client = require("../model/client");
+const Client = require("../models/client");
 
 router.post("/register", async (req, res) => {
   if (req.get("authorization") !== process.env.ADMIN_SECRET)

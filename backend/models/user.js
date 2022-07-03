@@ -27,10 +27,6 @@ const confirmSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  secureRandom: {
-    type: String,
-    required: true,
-  },
   dateOfRegistration: {
     type: Date,
     required: true,

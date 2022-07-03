@@ -11,6 +11,8 @@ const { startDb, stopDb, deleteAll } = require("./utils/inMemoryDb");
 const {
   setupGoogleSuccessResponse,
   setupGoogleErrorResponse,
+  setupOidSuccessResponse,
+  setupOidErrorResponse,
 } = require("./utils/httpMock");
 
 describe("POST requests to api/user/login", () => {
@@ -111,8 +113,7 @@ describe("POST requests to api/user/login", () => {
 
     // then
     expect(response.status).toBe(200);
-    const responseToken = jwt.decode(response.body);
-    console.log("responseToken: ", responseToken);
+    const responseToken = jwt.decode(response.body.sessionToken);
     expect(responseToken.providers.google).toBe(googleUserId);
     const users = await UserEntity.find();
     expect(users).toStrictEqual([]);

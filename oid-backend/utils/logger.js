@@ -1,6 +1,6 @@
 const pino = require("pino");
 const { createPinoBrowserSend, createWriteStream } = require("pino-logflare");
-const config = require("./config");
+const config = require("../config");
 const { logflare } = config;
 
 const stream = createWriteStream({

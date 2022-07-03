@@ -14,5 +14,20 @@ const setupGoogleSuccessResponse = (sub) => {
 const setupGoogleErrorResponse = () => {
   mock.onPost("https://oauth2.googleapis.com/token").replyOnce(401);
 };
+const setupOidSuccessResponse = (sub) => {
+  const token = jwt.sign({ sub }, "fakeSecretKey");
+  mock
+    .onPost("https://oauth2.googleapis.com/token")
+    .replyOnce(200, { id_token: token });
+};
 
-module.exports = { setupGoogleSuccessResponse, setupGoogleErrorResponse };
+const setupOidErrorResponse = () => {
+  mock.onPost("https://oauth2.googleapis.com/token").replyOnce(401);
+};
+
+module.exports = {
+  setupGoogleSuccessResponse,
+  setupGoogleErrorResponse,
+  setupOidSuccessResponse,
+  setupOidErrorResponse,
+};

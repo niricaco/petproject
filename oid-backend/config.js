@@ -7,8 +7,8 @@ const config = {
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
+      // useCreateIndex: true,
+      // useFindAndModify: false,
     },
   },
 
@@ -34,7 +34,10 @@ const config = {
 
   logflare: {
     // logflare config
-    apiKey: process.env.LOGFLARE_API_KEY || "",
-    sourceToken: process.env.LOGFLARE_SOURCE_ID || "",
+    apiKey: process.env.LOGFLARE_API_KEY || "A6roeaSZx94T",
+    sourceToken:
+      process.env.LOGFLARE_SOURCE_ID || "b79d5199-13c7-45ec-a9b2-0ddffd5df0df",
   },
 };
+
+module.exports = config;
