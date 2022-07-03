@@ -38,6 +38,9 @@ const config = {
     sourceToken:
       process.env.LOGFLARE_SOURCE_ID || "b79d5199-13c7-45ec-a9b2-0ddffd5df0df",
   },
+
+  // admin secret
+  adminSecret: process.env.ADMIN_SECRET || "admin",
 };
 
 module.exports = config;
