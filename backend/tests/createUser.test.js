@@ -73,7 +73,7 @@ describe("POST requests to api/user/create", () => {
 
     // then
     const user = await UserEntity.find();
-    console.log(user);
+
     expect(response.status).toBe(200);
   });
 });

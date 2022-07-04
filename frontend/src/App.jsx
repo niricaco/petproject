@@ -24,6 +24,7 @@ function App() {
               </Protected>
             }
           />
+          <Route path="/callback/:provider" element={<Callback />} />
           <Route
             path="/register"
             element={
@@ -32,7 +33,6 @@ function App() {
               </Protected>
             }
           />
-          <Route path="/callback" element={<Callback />} />
         </Routes>
       </div>
     </>

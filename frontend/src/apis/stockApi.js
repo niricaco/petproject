@@ -1,9 +1,9 @@
 import http from "axios";
 import config from "../app.config";
 
-export const toDoApi = () => {
+export const stockApi = () => {
   const instance = http.create({
-    baseURL: config.todoapi,
+    baseURL: config.stockApi,
     timeout: 3000,
   });
 

@@ -3,7 +3,7 @@ const config = {
 
   mongo: {
     // mongo connection options
-    uri: process.env.MONGO_URI || "mongodb://localhost:27017/oid-backend",
+    uri: process.env.MONGO_URI || "mongodb://localhost:27017/oiddb",
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,

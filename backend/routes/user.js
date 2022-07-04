@@ -14,9 +14,9 @@ router.post("/login", auth({ block: false }), async (req, res) => {
 
   const code = payload.code;
   const provider = payload.provider;
-  if (!code || !provider) return res.status(400).send("Nice try");
+  if (!code || !provider) return res.status(400).send("Better try");
   if (!Object.keys(config.auth).includes(provider))
-    return res.status(400).send("Nice try");
+    return res.status(400).send("Almost there");
 
   const configProvider = config.auth[provider]; // google or github
   const link = configProvider.tokenEndpoint;
@@ -64,8 +64,8 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   }
 
   const key = `providers.${provider}`;
-  // console.log("openId: ", openId);
   let user = await User.findOne({ [key]: openId }); // already "registered" user in DB
+
   if (user && res.locals.user?.providers) {
     user.providers = { ...user.providers, ...res.locals.user.providers }; // append a new provider to its existing one
     user = await user.save();
@@ -74,47 +74,15 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   const sessionToken = jwt.sign(
     {
       userId: user?._id,
-      providers: user ? user.providers : { [provider]: openId },
+      providers: user ? user?.providers : { [provider]: openId },
+      user: user,
     },
     process.env.JWT_SECRET_KEY,
     { expiresIn: "1h" }
   ); // conditional chaining bro
   res.status(200).json({ sessionToken });
-
-  /*
-  itt FE-en ha nincs userid a most visszakuldott tokenben, akkor latni fog egy formot, csinaljon profilt !!!!
-  */
 });
 
 router.post("/create", auth({ block: true }), createUser);
 
-/* router.post("/create", auth({ block: true }), async (req, res) => {
-  if (!req.body?.username) return res.sendStatus(400);
-
-  const user = await User.create({
-    username: req.body.username,
-    providers: res.locals.user.providers,
-  });
-
-  const token = jwt.sign(
-    { userId: user._id, providers: user.providers },
-    process.env.JWT_SECRET_KEY,
-    { expiresIn: "1h" }
-  );
-  res.status(200).json(token);
-}); */
-
 module.exports = router;
-
-/*
-google:
-https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=651816047225-1us03r4vchvce7h51t0c49f4u0ip7ubm.apps.googleusercontent.com&redirect_uri=http://localhost:3000/callback&scope=openid%20email&prompt=select_account
-
-github:
-https://github.com/login/oauth/authorize?response_type=code&client_id=a6b3d8e1c2c6c193dac2&redirect_uri=http://localhost:3000/callback/github&scope=user%20email&prompt=select_account
-
-http://localhost:3000/callback/github
-
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm92aWRlcnMiOnsiZ29vZ2xlIjoiMTA4NjExNjkzODMyNzQ3Mzk1Mjg0In0sImlhdCI6MTY1NDg1OTE2NiwiZXhwIjoxNjU0ODYyNzY2fQ.3bsjd1fhZxiYHVTb48FZPdJwlMk0jjx9oki0QsIAP20
-*/

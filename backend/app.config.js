@@ -3,15 +3,26 @@ const config = {
     google: {
       clientId:
         process.env.GOOGLE_CLIENT_ID ||
-        "651816047225-1us03r4vchvce7h51t0c49f4u0ip7ubm.apps.googleusercontent.com",
+        "248375511050-8tu71vfmt3ne71drsgfcm86ba7nea1ki.apps.googleusercontent.com",
       clientSecret:
         process.env.GOOGLE_CLIENT_SECRET ||
-        "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",
+        "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",
       redirectUri:
-        process.env.GOOGLE_REDIRECT_URI || "http://localhost:3000/callback",
+        process.env.GOOGLE_REDIRECT_URI ||
+        "http://localhost:3001/callback/google",
       tokenEndpoint: "https://oauth2.googleapis.com/token",
       scope: "openid",
     },
+
+    oid: {
+      clientId: process.env.OID_CLIENT_ID || "mycid",
+      clientSecret: process.env.OID_CLIENT_SECRET || "myclientsecret",
+      redirectUri:
+        process.env.OID_REDIRECT_URI || "http://localhost:3001/callback/oid",
+      tokenEndpoint: "http://localhost:8000/api/user/token",
+      scope: "openid",
+    },
+
     github: {
       clientId: process.env.GITHUB_CLIENT_ID || "a6b3d8e1c2c6c193dac2",
       clientSecret:

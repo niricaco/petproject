@@ -26,6 +26,8 @@ const userRoutes = require("./routes/user.js");
 app.use("/api/user", userRoutes);
 const orderRoutes = require("./routes/order");
 app.use("/api/order", orderRoutes);
+const companyRoutes = require("./routes/company");
+app.use("/api/company", companyRoutes);
 
 app.get("/", (req, res) => {
   console.log("Health check completed");

@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const Client = require("../models/client");
+const config = require("../config");
 
 router.post("/register", async (req, res) => {
-  if (req.get("authorization") !== process.env.ADMIN_SECRET)
+  if (req.get("authorization") !== config.adminSecret)
     return res.sendStatus(401);
 
   await Client.create({

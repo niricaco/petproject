@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../providers/auth";
 
@@ -9,33 +9,19 @@ const Navbar = () => {
     navigate(path);
   };
 
-  const { auth, token, logout } = useAuth();
-
-  /* const token = localStorage.getItem("sessionToken"); */
+  const { auth, token, logout, userDetails } = useAuth();
 
   return (
     <>
-      <nav
-        className="navbar"
-        style={{
-          backgroundColor: "gray",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <div>
-          <button onClick={() => nav("/")}>Home</button>
-          <button onClick={() => nav("/about")}>About</button>
-          <button onClick={() => nav("/profile")}>Profile</button>
-        </div>
-        {/* <button onClick={() => navigate("/profile")}>Profile</button> */}
-        <div>
-          {token ? (
-            <button onClick={logout}>logout</button>
-          ) : (
-            <button onClick={auth}>Login</button>
-          )}
-        </div>
+      <nav>
+        {userDetails
+          ? `Logged in as  ${userDetails.username} `
+          : "Anonymus user"}
+        {token ? (
+          <button onClick={logout}>Logout</button>
+        ) : (
+          "You are not logged in"
+        )}
       </nav>
     </>
   );

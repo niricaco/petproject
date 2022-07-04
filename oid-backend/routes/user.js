@@ -1,16 +1,16 @@
 const router = require("express").Router();
-const User = require("../model/user");
-const Client = require("../model/client");
+const User = require("../models/user");
+const Client = require("../models/client");
 const jwt = require("jsonwebtoken");
 
 router.post("/signup", async (req, res) => {
-  if (!req.body?.username || !req.body.password) return res.sendStatus(400);
+  if (!req.body?.email || !req.body.password) return res.sendStatus(400);
 
-  const users = await User.find({ username: req.body.username });
+  const users = await User.find({ email: req.body.email });
   if (users.length) return res.sendStatus(409);
 
   await User.create({
-    username: req.body.username,
+    email: req.body.email,
     password: req.body.password, // hash password !!!!
   });
 
@@ -20,24 +20,28 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   console.log(req.body);
   if (
-    !req.body?.username ||
-    !req.body.password ||
-    !req.body.client ||
-    !req.body.redirectUri
+    !req.body?.email ||
+    !req.body?.password ||
+    !req.body?.client ||
+    !req.body?.redirectUri
   )
     return res.sendStatus(400);
 
   // hash!!!
   const users = await User.find({
-    username: req.body.username,
+    email: req.body.email,
     password: req.body.password,
   });
+
+  console.log(users);
 
   if (!users.length) return res.sendStatus(401);
 
   const client = await Client.findOne({ client_id: req.body.client });
 
   if (!client) return res.sendStatus(401);
+  console.log(client.redirect_uri);
+  console.log(req.body.redirectUri);
   if (client.redirect_uri !== req.body.redirectUri) return res.sendStatus(401);
 
   const code =
@@ -46,6 +50,7 @@ router.post("/login", async (req, res) => {
   client.users.push({
     userId: users[0]._id,
     code,
+    email: users[0].email,
   });
 
   await client.save();
@@ -68,7 +73,14 @@ router.post("/token", async (req, res) => {
 
   if (!user) return res.sendStatus(401);
 
-  const token = jwt.sign({ sub: user.userId }, "shhhh", { expiresIn: "1h" });
+  const data = {
+    userId: user.userId,
+    email: user.email,
+  };
+
+  const token = jwt.sign({ sub: user.userId, header: user.email }, "shhhh", {
+    expiresIn: "1h",
+  });
 
   res.json({ id_token: token });
 });

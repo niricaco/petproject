@@ -19,6 +19,11 @@ const providerSchema = new mongoose.Schema({
     sparse: true,
     unique: true,
   },
+  oid: {
+    type: String,
+    sparse: true,
+    unique: true,
+  },
 });
 
 const confirmSchema = new mongoose.Schema({

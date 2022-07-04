@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const config = require("./config");
 
 const clientRoutes = require("./routes/client");
+const userRoutes = require("./routes/user");
 const errorHandler = require("./middlewares/errorHandler");
 
 const { corsOptions } = config;
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 
 app.use("/api/client", clientRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
   console.log("Health check completed");

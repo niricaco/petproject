@@ -1,33 +1,45 @@
-import React from "react";
-import { useCounter } from "../hooks/useCounter";
-import { useCounter as useGlobalCounter } from "../providers/counter";
+import React, { useEffect } from "react";
 import { useAuth } from "../providers/auth";
+import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-
 const Home = () => {
-  const { counter, increment, decrement } = useCounter("Home");
-  const {
-    counter: globalCounter,
-    increment: globalIncrement,
-    decrement: globalDecrement,
-  } = useGlobalCounter();
+  const { token, auth, user } = useAuth();
+  const navigate = useNavigate();
 
-  const { token, auth } = useAuth();
+  useEffect(() => {
+    if (user?.userId) return navigate("/profile");
+  }, [user, navigate]);
 
   return (
     <>
-      <div>Home</div>
-      <p>{token ? "Logged in" : "Anonymus user"}</p>
-      <p>Value: {counter}</p>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
-      <p>Value: {globalCounter}</p>
-      <button onClick={globalIncrement}>+</button>
-      <button onClick={globalDecrement}>-</button>
+      <div>Welcome</div>
+      <p>{token ? "Logged in" : "PLease log in"}</p>
 
-      <div>
-        {token ? "Welcome" : <button onClick={auth}>Login with Google</button>}
-      </div>
+      {token ? (
+        <>
+          <br />
+          <p>Welcome</p>
+        </>
+      ) : (
+        <>
+          <Button
+            onClick={() => auth("google")}
+            variant="contained"
+            color="info"
+            size="small"
+          >
+            Google login
+          </Button>
+          <Button
+            onClick={() => auth("oid")}
+            variant="contained"
+            color="info"
+            size="small"
+          >
+            My login
+          </Button>
+        </>
+      )}
     </>
   );
 };

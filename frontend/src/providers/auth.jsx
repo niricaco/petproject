@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import http from "axios";
 import jwt_decode from "jwt-decode";
-import { toDoApi } from "../api/toDoApi";
+import { stockApi } from "../apis/stockApi";
 import config from "../app.config";
 
 const AuthContext = createContext();
@@ -13,21 +13,26 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(0);
   const [user, setUser] = useState(null);
-  const { post } = toDoApi();
+  const [userDetails, setUserDetails] = useState(null);
+  const [company, setCompany] = useState(null);
+  const { get, post } = stockApi();
 
-  const auth = () => {
-    const googleBaseUrl = config.google_base_url;
+  const auth = (provider) => {
+    const baseUrl = config[provider].base_url;
 
     const searchParams = new URLSearchParams();
-    searchParams.append("client_id", config.google_client_id);
+    searchParams.append("client_id", config[provider].client_id);
     searchParams.append("scope", "openid");
-    searchParams.append("redirect_uri", window.location.origin + "/callback");
+    searchParams.append(
+      "redirect_uri",
+      window.location.origin + "/callback/" + provider
+    );
     searchParams.append("response_type", "code");
     searchParams.append("prompt", "select_account");
 
-    const fullUrl = googleBaseUrl + "?" + searchParams.toString();
+    const completeUrl = baseUrl + "?" + searchParams.toString();
 
-    window.open(fullUrl, "_self");
+    window.open(completeUrl, "_self");
   };
 
   const login = async (code, provider) => {
@@ -46,8 +51,13 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (username) => {
-    const response = await post("/user/create", { username });
+  const register = async (email, firstname, lastname, username) => {
+    const response = await post("/user/create", {
+      email,
+      firstname,
+      lastname,
+      username,
+    });
     if (response?.status === 200) {
       setToken(response.data.sessionToken);
       localStorage.setItem("sessionToken", response.data.sessionToken);
@@ -57,6 +67,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setToken(null);
+    setUser(null);
     localStorage.removeItem("sessionToken");
   };
 
@@ -68,7 +79,20 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const contextValue = { token, user, auth, login, logout, register };
+  useEffect(() => {
+    setUserDetails(user?.details);
+  }, [user]);
+
+  const contextValue = {
+    token,
+    user,
+    auth,
+    login,
+    logout,
+    register,
+    userDetails,
+    company,
+  };
 
   return (
     <>

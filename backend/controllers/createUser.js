@@ -8,17 +8,16 @@ const createUser = async (req, res) => {
     return res.sendStatus(400);
 
   const user = new UserEntity({
-    username: req.body.username,
+    email: req.body.email,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    username: req.body.username,
     providers: res.locals.user.providers,
-    email: req.body.email,
   });
-  console.log("user before save", user);
   await user.save();
 
   const sessionToken = jwt.sign(
-    { userId: user._id, providers: user.providers },
+    { userId: user._id, providers: user.providers, details: user },
     process.env.JWT_SECRET_KEY,
     { expiresIn: "1h" }
   );
