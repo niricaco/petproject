@@ -41,7 +41,7 @@ router.get("/users", auth({ block: true }), getAllUsers);
 router.get("/items", auth({ block: true }), getAllItems);
 
 // add a new item
-router.post("/items", auth({ block: true }), addItem);
+router.post("/item", auth({ block: true }), addItem);
 
 // create a job
 router.post("/jobs", auth({ block: true }), createJob);

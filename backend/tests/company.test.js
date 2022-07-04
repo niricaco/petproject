@@ -217,8 +217,6 @@ describe("GET requests to api/company/byuserid", () => {
       userId: mockObjectId1,
     };
 
-    console.log(body.userId);
-
     // when
     const response = await client
       .get("/api/company/byuserid")
@@ -227,11 +225,8 @@ describe("GET requests to api/company/byuserid", () => {
 
     // then
     const companies = response.body;
-    console.log(companies);
-    console.log(companies[0].roles);
-    // expect(companies).toHaveLength(2);
-    // expect(companies[0].name).toBe(name1);
-    // expect(companies[1].name).toBe(name2);
+    expect(companies).toHaveLength(1);
+    expect(companies[0].name).toBe(name1);
     expect(response.status).toBe(200);
   });
 });

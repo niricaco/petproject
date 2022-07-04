@@ -7,23 +7,23 @@ const itemSchema = new mongoose.Schema({
   },
   partNo: {
     type: String,
-    required: true,
+    required: false,
     default: null,
   },
   price: {
     type: Number,
     required: true,
-    default: null,
+    default: 0,
   },
   quantity: {
     type: Number,
     required: true,
-    default: null,
+    default: 0,
   },
   discount: {
     type: Number,
     required: true,
-    default: null,
+    default: 0,
   },
   currency: {
     type: String,
