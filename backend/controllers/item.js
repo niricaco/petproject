@@ -60,7 +60,7 @@ const updateItem = async (req, res) => {
 const deleteItem = async (req, res) => {
   if (!req.body?.companyId || !req.body?.itemId) return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyId);
-  company.items.findOneAndDelete({ _id: req.body.itemId });
+  await company.items.pull(req.body.itemId);
   await company.save();
   res.status(200).json({ company });
 };
