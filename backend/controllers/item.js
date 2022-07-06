@@ -41,7 +41,6 @@ const updateItem = async (req, res) => {
     (item) => item._id.toString() === itemId
   );
   // const item = await company.items.findById(itemId);
-  console.log(item);
   if (name) item.name = name;
   if (partNo) item.partNo = partNo;
   if (price) item.price = price;

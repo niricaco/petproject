@@ -17,7 +17,7 @@ const {
   updateItem,
   deleteItem,
 } = require("../controllers/item");
-const { createJob, deleteJob } = require("../controllers/job");
+const { createWork, deleteWork } = require("../controllers/work");
 
 /* these are REST endpoints */
 
@@ -43,8 +43,8 @@ router.get("/items", auth({ block: true }), getAllItems);
 // add a new item
 router.post("/item", auth({ block: true }), addItem);
 
-// create a job
-router.post("/jobs", auth({ block: true }), createJob);
+// create a work
+router.post("/work", auth({ block: true }), createWork);
 
 // set the user's work and specialization
 router.post(
@@ -59,8 +59,8 @@ router.put("/items/:id", auth({ block: true }), updateItem);
 // user promotion by id
 router.patch("/promote/:id", auth({ block: true }), promoteUser);
 
-// deletea job by id
-router.delete("/jobs/:id", auth({ block: true }), deleteJob);
+// deletea work by id
+router.delete("/works/:id", auth({ block: true }), deleteWork);
 
 // delete an item by id
 router.delete("/items/:id", auth({ block: true }), deleteItem);
