@@ -59,8 +59,8 @@ router.put("/items/:id", auth({ block: true }), updateItem);
 // user promotion by id
 router.patch("/promote/:id", auth({ block: true }), promoteUser);
 
-// deletea work by id
-router.delete("/works/:id", auth({ block: true }), deleteWork);
+// delete a work by name
+router.delete("/works/:name", auth({ block: true }), deleteWork);
 
 // delete an item by id
 router.delete("/items/:id", auth({ block: true }), deleteItem);

@@ -120,7 +120,122 @@ describe("POST requests to api/dashboards/work", () => {
       .send(body);
 
     // then
-    const user = await CompanyEntity.find();
+    const company = await CompanyEntity.find();
+    expect(company[0].works.length).toBe(1);
+    expect(company[0].works[0]).toBe(work);
+    expect(response.status).toBe(200);
+  });
+});
+
+describe("DELETE requests to api/dashboards/works/:name", () => {
+  let connection;
+  let server;
+  let client;
+
+  beforeAll(async () => {
+    const result = await startDb();
+    connection = result[0];
+    server = result[1];
+    client = mockServer.agent(app);
+  });
+
+  afterAll(async () => {
+    await stopDb(connection, server);
+  });
+
+  afterEach(async () => {
+    await deleteAll(CompanyEntity);
+  });
+
+  test("should return 401 without auth header", async () => {
+    // given
+    const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
+    const name1 = "Energo";
+    const mockObjectId1 = new mongoose.Types.ObjectId();
+    const dummyCompany1 = new CompanyEntity({
+      name: name1,
+      roles: {
+        owners: mockObjectId1,
+      },
+    });
+    const work = "Разработка приложения";
+    dummyCompany1.works.push(work);
+    await dummyCompany1.save();
+    const companyId = dummyCompany1._id;
+    body = {
+      companyId,
+      work,
+    };
+
+    // when
+    const response = await client
+      .delete("/api/dashboards/works/:name")
+      .set({})
+      .send({ body });
+
+    // then
+    expect(response.status).toBe(401);
+  });
+
+  test("should return 400 without body", async () => {
+    // given
+    const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
+    const name1 = "Energo";
+    const mockObjectId1 = new mongoose.Types.ObjectId();
+    const dummyCompany1 = new CompanyEntity({
+      name: name1,
+      roles: {
+        owners: mockObjectId1,
+      },
+    });
+    const work = "Разработка приложения";
+
+    dummyCompany1.works.push(work);
+    await dummyCompany1.save();
+    const companyId = dummyCompany1._id;
+    body = {
+      companyId,
+      work,
+    };
+
+    // when
+    const response = await client
+      .delete("/api/dashboards/works/:name")
+      .set({ authorization: token })
+      .send({});
+
+    // then
+    expect(response.status).toBe(400);
+  });
+
+  test("should create work with correct body and return 200", async () => {
+    // given
+    const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
+    const name1 = "Energo";
+    const mockObjectId1 = new mongoose.Types.ObjectId();
+    const dummyCompany1 = new CompanyEntity({
+      name: name1,
+      roles: {
+        owners: mockObjectId1,
+      },
+    });
+    const work = "Разработка приложения";
+    dummyCompany1.works.push(work);
+    await dummyCompany1.save();
+    const companyId = dummyCompany1._id;
+    body = {
+      companyId,
+      work,
+    };
+
+    // when
+    const response = await client
+      .delete("/api/dashboards/works/:name")
+      .set({ authorization: token })
+      .send(body);
+
+    // then
+    const company = await CompanyEntity.find();
 
     expect(response.status).toBe(200);
   });
