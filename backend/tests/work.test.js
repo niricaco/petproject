@@ -44,7 +44,9 @@ describe("POST requests to api/dashboards/work", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     await dummyCompany1.save();
@@ -73,7 +75,9 @@ describe("POST requests to api/dashboards/work", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     await dummyCompany1.save();
@@ -102,7 +106,9 @@ describe("POST requests to api/dashboards/work", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     await dummyCompany1.save();
@@ -155,7 +161,9 @@ describe("DELETE requests to api/dashboards/works/:name", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const work = "Разработка приложения";
@@ -185,7 +193,9 @@ describe("DELETE requests to api/dashboards/works/:name", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const work = "Разработка приложения";
@@ -216,7 +226,9 @@ describe("DELETE requests to api/dashboards/works/:name", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const work = "Разработка приложения";

@@ -12,12 +12,7 @@ const getCompaniesByUserId = async (req, res) => {
   const userId = req.body.userId;
 
   const companies = await Company.find({
-    $or: [
-      { "roles.owners": userId },
-      { "roles.admins": userId },
-      { "roles.users": userId },
-      { "roles.storekeepers": userId },
-    ],
+    $or: [{ roles: { $elemMatch: { userId } } }],
   });
 
   res.status(200).json(companies);
@@ -31,7 +26,9 @@ const createCompany = async (req, res) => {
   const company = new Company({
     name: req.body.name,
     roles: {
-      owners: req.body.userId,
+      role: req.body.role,
+      userId: req.body.userId,
+      username: req.body.username,
     },
   });
   await company.save();

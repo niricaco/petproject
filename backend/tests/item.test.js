@@ -44,7 +44,9 @@ describe("POST requests to api/dashboard/item", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     await dummyCompany1.save();
@@ -69,7 +71,9 @@ describe("POST requests to api/dashboard/item", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     await dummyCompany1.save();
@@ -101,7 +105,9 @@ describe("POST requests to api/dashboard/item", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     await dummyCompany1.save();
@@ -156,7 +162,9 @@ describe("GET requests to api/dashboard/items", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -188,7 +196,9 @@ describe("GET requests to api/dashboard/items", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -220,7 +230,9 @@ describe("GET requests to api/dashboard/items", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -279,7 +291,9 @@ describe("PUT requests to api/dashboard/items/:id", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -319,7 +333,9 @@ describe("PUT requests to api/dashboard/items/:id", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -359,7 +375,9 @@ describe("PUT requests to api/dashboard/items/:id", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -426,7 +444,9 @@ describe("DELETE requests to api/dashboard/items/:id", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -463,7 +483,9 @@ describe("DELETE requests to api/dashboard/items/:id", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {
@@ -500,7 +522,9 @@ describe("DELETE requests to api/dashboard/items/:id", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "boss",
       },
     });
     const item1 = {

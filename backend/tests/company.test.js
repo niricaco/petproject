@@ -78,6 +78,8 @@ describe("POST requests to api/company/create", () => {
     const body = {
       name,
       userId: mockObjectId,
+      role: "owner",
+      username: "boss",
     };
 
     // when
@@ -90,7 +92,7 @@ describe("POST requests to api/company/create", () => {
     const compay = await CompanyEntity.find();
     expect(compay).toHaveLength(1);
     expect(compay[0].name).toBe(name);
-    expect(compay[0].roles.owners).toEqual([mockObjectId]);
+    expect(compay[0].roles[0].userId).toEqual(mockObjectId);
     expect(response.status).toBe(200);
   });
 });
@@ -133,7 +135,9 @@ describe("GET requests to api/company/names", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "bossy",
       },
     });
     await dummyCompany1.save();
@@ -142,7 +146,9 @@ describe("GET requests to api/company/names", () => {
     const dummyCompany2 = new CompanyEntity({
       name: name2,
       roles: {
-        owners: mockObjectId2,
+        role: "owner",
+        userId: mockObjectId2,
+        username: "boss",
       },
     });
     await dummyCompany2.save();
@@ -200,7 +206,9 @@ describe("GET requests to api/company/byuserid", () => {
     const dummyCompany1 = new CompanyEntity({
       name: name1,
       roles: {
-        owners: mockObjectId1,
+        role: "owner",
+        userId: mockObjectId1,
+        username: "bossy",
       },
     });
     await dummyCompany1.save();
@@ -209,7 +217,9 @@ describe("GET requests to api/company/byuserid", () => {
     const dummyCompany2 = new CompanyEntity({
       name: name2,
       roles: {
-        owners: mockObjectId2,
+        role: "owner",
+        userId: mockObjectId2,
+        username: "boss",
       },
     });
     await dummyCompany2.save();
@@ -224,9 +234,9 @@ describe("GET requests to api/company/byuserid", () => {
       .send(body);
 
     // then
+    expect(response.status).toBe(200);
     const companies = response.body;
     expect(companies).toHaveLength(1);
     expect(companies[0].name).toBe(name1);
-    expect(response.status).toBe(200);
   });
 });

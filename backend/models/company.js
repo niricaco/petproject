@@ -20,7 +20,7 @@ const companySchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  roles: roleSchema,
+  roles: [roleSchema],
   orders: [orderSchema],
   works: [],
   specializations: [],
