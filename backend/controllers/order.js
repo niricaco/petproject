@@ -22,9 +22,24 @@ const createOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   if (!req.body?.companyId || !req.body?.order.orderId)
     return res.sendStatus(400);
-  const company = await CompanyEntity.findById(req.body.companyId);
-  const order = company.orders.id(req.body.order.orderId);
-  order.set(req.body.order);
+  const { companyId, order } = req.body;
+  const { orderId, confirmed, isCollected, orderList } = order;
+  const { itemId, name, quantity } = orderList[0];
+  const company = await CompanyEntity.findById(companyId);
+  const specificOrder = await company.orders.find(
+    (order) => order._id.toString() === orderId
+  );
+  const orderListItem = await specificOrder.orderList.find(
+    (item) => item.itemId.toString() === itemId
+  );
+  if (itemId) orderListItem.itemId = itemId;
+  if (name) orderListItem.name = name;
+  if (quantity) orderListItem.quantity = quantity;
+  if (itemId || name || quantity) {
+    specificOrder.confirmed = false;
+    specificOrder.isCollected = false;
+  }
+  if (confirmed) specificOrder.confirmed = true;
   await company.save();
   res.status(200).json({ company });
 };
