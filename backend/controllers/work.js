@@ -12,7 +12,6 @@ const createWork = async (req, res) => {
 const deleteWork = async (req, res) => {
   if (!req.body?.companyId || !req.body?.work) return res.sendStatus(400);
   const company = await CompanyEntity.findById(req.body.companyId);
-  console.log("company", company);
   company.works.pull(req.body.work);
   await company.save();
   res.status(200).json({ company });

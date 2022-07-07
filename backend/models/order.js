@@ -2,16 +2,9 @@ const mongoose = require("mongoose");
 const itemSchema = require("./item");
 
 const orderSchema = new mongoose.Schema({
-  orderNumber: {
-    type: String,
-    required: true,
-  },
   orderedBy: {
-    type: String,
-    required: true,
-  },
-  company: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
   confirmed: {
@@ -31,21 +24,37 @@ const orderSchema = new mongoose.Schema({
   },
   work: {
     type: String,
-    required: true,
+    required: false,
   },
   specialization: {
     type: String,
     required: false,
     default: null,
   },
-  details: [itemSchema],
+  orderList: {
+    type: [
+      {
+        itemId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Item",
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          default: 0,
+        },
+      },
+    ],
+  },
   orderDate: {
     type: Date,
     required: true,
-  },
-  orderTime: {
-    type: Date,
-    required: true,
+    default: Date.now,
   },
 });
 
