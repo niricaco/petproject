@@ -25,7 +25,7 @@ const { createWork, deleteWork } = require("../controllers/work");
 router.get("/", auth({ block: true }), userDetials);
 
 // get all users
-router.get("/users", auth({ block: true }), getAllUsers);
+// router.get("/users", auth({ block: true }), getAllUsers);
 
 // get the user's work and specialization
 router.get(
@@ -35,7 +35,7 @@ router.get(
 );
 
 // get all users
-router.get("/users", auth({ block: true }), getAllUsers);
+router.post("/users", auth({ block: true }), getAllUsers);
 
 // get all items
 router.get("/items", auth({ block: true }), getAllItems);

@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
   await user.save();
 
   const sessionToken = jwt.sign(
-    { userId: user._id, providers: user.providers, details: user },
+    { userId: user._id, providers: user.providers, user: user },
     process.env.JWT_SECRET_KEY,
     { expiresIn: "1h" }
   );

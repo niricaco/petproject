@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const itemSchema = require("../models/item");
 const orderSchema = require("./order");
 const roleSchema = require("./role");
+const codeSchema = require("./code");
+const inviteSchema = require("./invite");
 
 const workSchema = new mongoose.Schema({
   name: {
@@ -20,6 +22,8 @@ const companySchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  codes: [codeSchema],
+  invites: [inviteSchema],
   roles: [roleSchema],
   orders: [orderSchema],
   works: [],

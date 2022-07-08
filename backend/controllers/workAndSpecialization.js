@@ -15,7 +15,7 @@ const setWorkAndSpecialization = async (req, res) => {
     return res
       .status(400)
       .json({ error: "Please provide work and specialization" });
-  const user = await UserEntity.findById(res.locals.user.userId);
+  const user = await UserEntity.findById(res.locals.userId);
   user.workAndSpecialization.work = req.body.work;
   user.workAndSpecialization.specialization = req.body.specialization;
   await user.save();

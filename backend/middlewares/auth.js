@@ -7,7 +7,7 @@ const auth =
     if (!token && block) return res.sendStatus(401);
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, payload) => {
-      if (err && block) res.sendStatus(401);
+      if (err && block) return res.sendStatus(401);
       res.locals.user = payload;
       next();
     });

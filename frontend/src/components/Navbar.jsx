@@ -1,27 +1,35 @@
+import { Button } from "@mui/material";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../providers/auth";
+import { useDetails } from "../providers/details";
 
 const Navbar = () => {
-  const navigate = useNavigate();
-  const nav = (path) => {
-    /* console.log("rerouting"); */ // barmilyen route elotti logika, pl lejart token ellenorzese
-    navigate(path);
-  };
+  const { token, logout } = useAuth();
+  const { userDetails, companyDetails } = useDetails();
 
-  const { auth, token, logout, userDetails } = useAuth();
+  useEffect(() => {}, [companyDetails]);
+
+  console.log(userDetails);
 
   return (
     <>
       <nav>
-        {userDetails
-          ? `Logged in as  ${userDetails.username} `
-          : "Anonymus user"}
-        {token ? (
-          <button onClick={logout}>Logout</button>
-        ) : (
-          "You are not logged in"
-        )}
+        <div className="nav-wrapper">
+          {userDetails ? (
+            <div>
+              Logged in as {userDetails.username}
+              {companyDetails ? ` - ${companyDetails.name}` : ""}
+            </div>
+          ) : (
+            "Anonymus user"
+          )}
+
+          {token ? (
+            <Button onClick={logout}>Logout</Button>
+          ) : (
+            "You are not logged in"
+          )}
+        </div>
       </nav>
     </>
   );

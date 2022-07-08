@@ -51,7 +51,7 @@ const roleSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  username: {
+  email: {
     type: String,
     ref: "User",
     required: true,

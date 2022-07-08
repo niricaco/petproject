@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Callback from "./pages/Callback";
 import Protected from "./components/Protected";
 import Register from "./pages/Register";
+import Users from "./pages/Users";
+import Invite from "./pages/Invite";
 
 function App() {
   return (
@@ -21,6 +23,22 @@ function App() {
             element={
               <Protected>
                 <Profile />
+              </Protected>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <Protected>
+                <Users />
+              </Protected>
+            }
+          />
+          <Route
+            path="/invite"
+            element={
+              <Protected>
+                <Invite />
               </Protected>
             }
           />

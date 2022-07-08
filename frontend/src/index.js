@@ -5,14 +5,25 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./providers/auth";
+import { DetailsProvider } from "./providers/details";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </AuthProvider>
+  <ThemeProvider theme={darkTheme}>
+    <AuthProvider>
+      <DetailsProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </DetailsProvider>
+    </AuthProvider>
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

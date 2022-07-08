@@ -3,7 +3,6 @@ import { useState } from "react";
 import { createContext } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-import http from "axios";
 import jwt_decode from "jwt-decode";
 import { stockApi } from "../apis/stockApi";
 import config from "../app.config";
@@ -13,8 +12,6 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(0);
   const [user, setUser] = useState(null);
-  const [userDetails, setUserDetails] = useState(null);
-  const [company, setCompany] = useState(null);
   const { get, post } = stockApi();
 
   const auth = (provider) => {
@@ -79,10 +76,6 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  useEffect(() => {
-    setUserDetails(user?.details);
-  }, [user]);
-
   const contextValue = {
     token,
     user,
@@ -90,8 +83,6 @@ const AuthProvider = ({ children }) => {
     login,
     logout,
     register,
-    userDetails,
-    company,
   };
 
   return (
