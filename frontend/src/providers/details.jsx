@@ -31,13 +31,13 @@ const DetailsProvider = ({ children }) => {
       const role = companyDetails.roles.find(
         (role) => role.email === userDetails.email
       );
-      setRole(role.role);
+      return setRole(role.role);
     } else {
       if (userDetails?.email && companyDetails?.invite) {
-        invitedUser();
+        return invitedUser();
       }
     }
-    setRole("");
+    return setRole("");
   };
 
   const getCompanies = async () => {
@@ -60,12 +60,20 @@ const DetailsProvider = ({ children }) => {
     getCompanies(userDetails._id);
   }, [userDetails]);
 
+  useEffect(() => {
+    if (companyDetails?.roles) roleOfUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDetails, companyDetails]);
+
+  console.log("role", role);
+
   const contextValue = {
     userDetails,
     setUserDetails,
     companyDetails,
     setCompanyDetails,
     getCompanies,
+    role,
   };
 
   return (

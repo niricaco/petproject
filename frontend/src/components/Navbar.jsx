@@ -9,19 +9,17 @@ const Navbar = () => {
 
   useEffect(() => {}, [companyDetails]);
 
-  console.log(userDetails);
-
   return (
     <>
       <nav>
         <div className="nav-wrapper">
           {userDetails ? (
             <div>
-              Logged in as {userDetails.username}
+              {userDetails.username}
               {companyDetails ? ` - ${companyDetails.name}` : ""}
             </div>
           ) : (
-            "Anonymus user"
+            ""
           )}
 
           {token ? (

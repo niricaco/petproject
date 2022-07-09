@@ -9,6 +9,9 @@ import Protected from "./components/Protected";
 import Register from "./pages/Register";
 import Users from "./pages/Users";
 import Invite from "./pages/Invite";
+import Items from "./pages/Items";
+import Orders from "./pages/Orders";
+import NewItem from "./pages/NewItem";
 
 function App() {
   return (
@@ -39,6 +42,30 @@ function App() {
             element={
               <Protected>
                 <Invite />
+              </Protected>
+            }
+          />
+          <Route
+            path="/items"
+            element={
+              <Protected>
+                <Items />
+              </Protected>
+            }
+          />
+          <Route
+            path="/new-item"
+            element={
+              <Protected>
+                <NewItem />
+              </Protected>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <Protected>
+                <Orders />
               </Protected>
             }
           />

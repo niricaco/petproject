@@ -34,7 +34,7 @@ const Users = () => {
     setUserList(companyDetails.roles);
   }, [companyDetails]);
 
-  console.log(userList);
+  console.log("userList", userList);
   console.log(userList[0]?.role);
   console.log(selectedRole);
 

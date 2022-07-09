@@ -20,6 +20,12 @@ const itemSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  unit: {
+    type: String,
+    enum: ["piece", "kg", "l", "m", "m2", "m3", "box"],
+    default: "piece",
+    required: true,
+  },
   discount: {
     type: Number,
     required: true,

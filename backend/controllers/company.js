@@ -33,25 +33,40 @@ const createCompany = async (req, res) => {
 
 // join in company
 const joinCompany = async (req, res) => {
+  console.log("req.body", req.body);
   if (
-    !req.body?.confirmationCode ||
+    // !req.body?.confirmationCode ||
     !req.body?.userId ||
-    !req.body?.companyId ||
-    !req.body?.username
+    // !req.body?.companyId ||
+    !req.body?.email
   )
     return res.sendStatus(400);
-  const company = await Company.findOne({ _id: req.body.companyId });
+  // find a company by email within invites
+  const company = await Company.findOne({
+    invites: { $elemMatch: { email: req.body.email } },
+  });
+  console.log("company ", company);
+
   if (!company) return res.sendStatus(400);
-  const confirmationCode = company.invites.find(
-    (invite) => invite.code === req.body.confirmationCode
+  // const confirmationCode = company.invites.find(
+  //   (invite) => invite.code === req.body.confirmationCode
+  // );
+  // if (!confirmationCode) return res.sendStatus(400);
+  const invite = company.invites.filter(
+    (invite) => invite.email === req.body.email
   );
-  if (!confirmationCode) return res.sendStatus(400);
-  company.invites.pull({ code: req.body.confirmationCode });
-  company.roles.push({
+  console.log("invite ", invite);
+  if (!invite) return res.sendStatus(400);
+  await company.invites.pull(invite);
+  console.log("company.invites ", company.invites);
+
+  await company.roles.push({
     role: "user",
     userId: req.body.userId,
-    username: req.body.username,
+    email: req.body.email,
   });
+  console.log("company.roles ", company.roles);
+  console.log("company ", company);
   await company.save();
   res.status(200).json({ company });
 };
@@ -61,16 +76,11 @@ const inviteCompany = async (req, res) => {
   if (!req.body?.companyId || !req.body?.email) return res.sendStatus(400);
   const company = await Company.findOne({ _id: req.body.companyId });
   if (!company) return res.sendStatus(400);
-  const invitedUser = company.invites.find(
+  const invitedUser = await company.invites.find(
     (invite) => invite.email === req.body.email
   );
-  if (!invitedUser) return res.sendStatus(400);
-  company.invites.pull({ email: req.body.email });
-  company.roles.push({
-    role: "user",
-    email: req.body.email,
-    userId: req.body.userId,
-  });
+  if (invitedUser) return res.sendStatus(400);
+  company.invites.push({ email: req.body.email });
   await company.save();
   res.status(200).json({ company });
 };

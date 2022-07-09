@@ -1,26 +1,23 @@
+import React from "react";
 import { Button, Input } from "@mui/material";
 import "../css/Profile.css";
-import React from "react";
-import { useAuth } from "../providers/auth";
 import { stockApi } from "../apis/stockApi";
 import { useState } from "react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDetails } from "../providers/details";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { token } = useAuth();
-  const { userDetails, companyDetails, getCompanies } = useDetails();
-  const { get, post } = stockApi(token);
-
-  const [companyName, setCompanyName] = useState("");
-  const [registrationCode, setRegistrationCode] = useState("");
+  const { userDetails, companyDetails, getCompanies, role } = useDetails();
+  const { post } = stockApi();
 
   const nav = (path) => {
     console.log("rerouting");
     navigate(path);
   };
+
+  const [companyName, setCompanyName] = useState("");
+  const [registrationCode, setRegistrationCode] = useState("");
 
   const createCompany = async () => {
     const response = await post("/company/create", {
@@ -36,36 +33,60 @@ const Profile = () => {
 
   const joinCompany = async () => {
     const response = await post("/company/join", {
-      confirmationCode: registrationCode,
-      companyId: companyDetails._id,
       userId: userDetails._id,
       email: userDetails.email,
     });
+    if (response.status === 200) {
+      getCompanies();
+    }
   };
 
   return (
     <>
-      <section>
+      <section className="sectionContainer">
         <div>
           {companyDetails ? (
             <div>
-              {" "}
-              <Button
-                onClick={() => nav("/users")}
-                variant="contained"
-                size="small"
-              >
-                Users
-              </Button>
+              {role === "owner" ? (
+                <div>
+                  <Button
+                    onClick={() => nav("/users")}
+                    variant="contained"
+                    size="small"
+                  >
+                    Users
+                  </Button>
+                </div>
+              ) : (
+                ""
+              )}
+              <div>
+                <Button
+                  onClick={() => nav("/orders")}
+                  variant="contained"
+                  size="small"
+                >
+                  Orders
+                </Button>
+              </div>
+              <div>
+                <Button
+                  onClick={() => nav("/items")}
+                  variant="contained"
+                  size="small"
+                >
+                  Items
+                </Button>
+              </div>
             </div>
           ) : (
             <div>
-              <Input
+              {/* <Input
                 type="text"
                 placeholder="Registration code"
                 value={registrationCode}
                 onChange={(e) => setRegistrationCode(e.target.value)}
-              />
+              /> */}
               <Button onClick={joinCompany}>Join to a companyDetails</Button>
               <Input
                 type="text"

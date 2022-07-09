@@ -54,10 +54,10 @@ router.post(
 );
 
 // update an item by id
-router.put("/items/:id", auth({ block: true }), updateItem);
+router.put("/item", auth({ block: true }), updateItem);
 
 // user promotion by id
-router.patch("/promote/:id", auth({ block: true }), promoteUser);
+router.put("/promote/", auth({ block: true }), promoteUser);
 
 // delete a work by name
 router.delete("/works/:name", auth({ block: true }), deleteWork);

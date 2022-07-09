@@ -33,5 +33,20 @@ export const stockApi = () => {
       return error.response;
     }
   };
-  return { post, get };
+
+  const put = async (path, data) => {
+    try {
+      const response = await instance.put(path, data, {
+        headers: {
+          authorization: localStorage.getItem("sessionToken"),
+        },
+      });
+      return response;
+    } catch (error) {
+      if (!error.response) return error;
+      return error.response;
+    }
+  };
+
+  return { post, get, put };
 };
