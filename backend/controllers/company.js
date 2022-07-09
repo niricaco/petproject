@@ -1,11 +1,5 @@
 const Company = require("../models/company");
 
-// get all companies' names and ids
-const getCompanyNames = async (req, res) => {
-  const companies = await Company.find({}).select("name _id");
-  res.status(200).json({ companies });
-};
-
 // get companies by userId in childrens
 const getCompaniesByUserEmail = async (req, res) => {
   if (!req.body?.email) return res.sendStatus(400);
@@ -82,8 +76,8 @@ const inviteCompany = async (req, res) => {
 };
 
 module.exports = {
-  getCompanyNames,
   getCompaniesByUserEmail,
   createCompany,
   joinCompany,
+  inviteCompany,
 };
