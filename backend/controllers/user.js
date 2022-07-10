@@ -32,15 +32,21 @@ const getAllUsers = async (req, res) => {
 };
 
 const promoteUser = async (req, res) => {
-  if (!req.body?.userId || !req.body?.companyId || !req.body?.role)
+  if (!req.body?.email || !req.body?.companyId || !req.body?.role)
     return res.sendStatus(400);
   const role = req.body.role;
   const company = await CompanyEntity.findById(req.body.companyId);
-  await company.roles.findOneAndUpdate(
-    { userId: req.body.userId },
-    { $set: { role } },
-    { new: true }
-  );
+  // await company.roles.findOneAndUpdate(
+  //   { userId: req.body.userId },
+  //   { $set: { role } },
+  //   { new: true }
+  // );
+  await company.roles.find((role) => {
+    if (role.email.toString() === req.body.email.toString()) {
+      role.role = req.body.role;
+    }
+  });
+
   await company.save();
   res.status(200).json({ company });
 };

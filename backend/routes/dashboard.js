@@ -57,7 +57,7 @@ router.post(
 router.put("/item", auth({ block: true }), updateItem);
 
 // user promotion by id
-router.put("/promote/", auth({ block: true }), promoteUser);
+router.put("/promote", auth({ block: true }), promoteUser);
 
 // delete a work by name
 router.delete("/works/:name", auth({ block: true }), deleteWork);

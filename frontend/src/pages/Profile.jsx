@@ -48,15 +48,13 @@ const Profile = () => {
           {companyDetails ? (
             <div>
               {role === "owner" ? (
-                <div>
-                  <Button
-                    onClick={() => nav("/users")}
-                    variant="contained"
-                    size="small"
-                  >
-                    Users
-                  </Button>
-                </div>
+                <Button
+                  onClick={() => nav("/users")}
+                  variant="contained"
+                  size="small"
+                >
+                  Users
+                </Button>
               ) : (
                 ""
               )}

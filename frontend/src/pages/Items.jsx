@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const Items = () => {
   const navigate = useNavigate();
-  const { companyDetails, getCompanies } = useDetails();
+  const { companyDetails, getCompanies, role } = useDetails();
   const { put } = stockApi();
 
   const nav = (path) => {
@@ -84,10 +84,19 @@ const Items = () => {
   return (
     <>
       <section>
-        <div>Items</div>
+        <Button
+          onClick={() => nav("/profile")}
+          variant="contained"
+          size="small"
+        >
+          Profile
+        </Button>
+        <h3>Items</h3>
         {companyDetails ? (
-          <div className="companyDetails container">
-            <div>
+          <div>
+            {role === "user" || role === "admin" ? (
+              ""
+            ) : (
               <Button
                 onClick={() => nav("/new-item")}
                 variant="contained"
@@ -95,65 +104,56 @@ const Items = () => {
               >
                 Add new item
               </Button>
-              <Button
-                onClick={() => nav("/profile")}
-                variant="contained"
-                size="small"
-              >
-                Profile
-              </Button>
-            </div>
-            <div>
-              <Autocomplete
-                className="container"
-                inputValue={selectedItem}
-                onInputChange={(event, newInputValue) => {
-                  setSelectedItem(newInputValue);
-                }}
-                id="controllable-states-demo"
-                options={itemList}
-                sx={{ width: 300 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Items" />
+            )}
+            <Autocomplete
+              className="container"
+              inputValue={selectedItem}
+              onInputChange={(event, newInputValue) => {
+                setSelectedItem(newInputValue);
+              }}
+              id="controllable-states-demo"
+              options={itemList}
+              sx={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Items" />}
+            />
+            {selectedItemDetails ? (
+              <div>
+                <TextField
+                  value={editedItemName}
+                  onChange={(e) => setEditedItemName(e.target.value)}
+                  size="small"
+                  label="Name"
+                ></TextField>
+                <TextField
+                  value={editedItemQuantity}
+                  onChange={(e) => setEditedItemQuantity(e.target.value)}
+                  size="small"
+                  label="Quantity"
+                ></TextField>
+                <br />
+                {role === "user" ? (
+                  "You are not authorized to edit this item"
+                ) : (
+                  <Button
+                    onClick={updateItem}
+                    variant="contained"
+                    size="small"
+                    disabled={
+                      selectedItemDetails.name !== editedItemName ||
+                      Number(selectedItemDetails.quantity) !==
+                        Number(editedItemQuantity) ||
+                      selectedItemDetails.unit !== editedItemUnit
+                        ? false
+                        : true
+                    }
+                  >
+                    Save
+                  </Button>
                 )}
-              />
-              {selectedItemDetails ? (
-                <div className="selectedItemDetails container">
-                  <div>
-                    <TextField
-                      value={editedItemName}
-                      onChange={(e) => setEditedItemName(e.target.value)}
-                      size="small"
-                      label="Name"
-                    ></TextField>
-                    <TextField
-                      value={editedItemQuantity}
-                      onChange={(e) => setEditedItemQuantity(e.target.value)}
-                      size="small"
-                      label="Quantity"
-                    ></TextField>
-                    <br />
-                    <Button
-                      onClick={updateItem}
-                      variant="contained"
-                      size="small"
-                      disabled={
-                        selectedItemDetails.name !== editedItemName ||
-                        Number(selectedItemDetails.quantity) !==
-                          Number(editedItemQuantity) ||
-                        selectedItemDetails.unit !== editedItemUnit
-                          ? false
-                          : true
-                      }
-                    >
-                      Save
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                "No item selected"
-              )}
-            </div>
+              </div>
+            ) : (
+              "No item selected"
+            )}
           </div>
         ) : (
           ""

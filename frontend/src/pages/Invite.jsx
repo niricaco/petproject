@@ -15,7 +15,7 @@ const Invite = () => {
     navigate(path);
   };
 
-  const { userDetails, companyDetails } = useDetails();
+  const { companyDetails } = useDetails();
 
   const { post } = stockApi();
 
@@ -24,34 +24,33 @@ const Invite = () => {
       email: email,
       companyId: companyDetails._id,
     });
-    console.log(response.data);
+    if (response.status !== 200) return alert("Error inviting user");
+    setEmail("");
+    alert("Invitation sent");
   };
 
   return (
     <>
-      <div>
-        <TextField
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          size="small"
-          label="Email"
-        ></TextField>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={inviteUser}
-          disabled={!email}
-        >
-          Invite
-        </Button>
-        <Button
-          onClick={() => nav("/profile")}
-          variant="contained"
-          size="small"
-        >
-          Profile
-        </Button>
-      </div>
+      <h3>Invite a user</h3>
+      <TextField
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        size="small"
+        label="Email"
+      ></TextField>
+      <br />
+      <Button
+        variant="contained"
+        size="small"
+        onClick={inviteUser}
+        disabled={!email}
+      >
+        Invite
+      </Button>
+      <br />
+      <Button onClick={() => nav("/users")} variant="contained" size="small">
+        Users
+      </Button>
     </>
   );
 };

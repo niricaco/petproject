@@ -5,6 +5,9 @@ import {
   MenuItem,
   TextField,
   Container,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import React from "react";
 import { useAuth } from "../providers/auth";
@@ -21,90 +24,76 @@ const Users = () => {
     console.log("rerouting");
     navigate(path);
   };
-  const { userDetails, companyDetails } = useDetails();
-  const { get, post } = stockApi();
+  const { userDetails, companyDetails, getCompanies } = useDetails();
+  const { put } = stockApi();
 
   const [userList, setUserList] = useState([]);
-  const [selectedRole, setSelectedRole] = useState("");
 
-  const promoteUser = async () => {};
+  const promoteUser = async (user) => {
+    if (user.email === userDetails.email)
+      return alert("You can't promote yourself");
+    console.log(user);
+    const body = {
+      role: user.role,
+      companyId: companyDetails._id,
+      email: user.email,
+    };
+    const response = await put("/dashboards/promote", body);
+    if (response.status !== 200) return alert("Error promoting user");
+    getCompanies();
+  };
 
   useEffect(() => {
     if (!companyDetails) return setUserList([]);
     setUserList(companyDetails.roles);
   }, [companyDetails]);
 
-  console.log("userList", userList);
-  console.log(userList[0]?.role);
-  console.log(selectedRole);
+  useEffect(() => {
+    getCompanies();
+  }, []);
 
   return (
     <>
-      <div>
-        <div>
-          <Button
-            onClick={() => nav("/invite")}
-            variant="contained"
-            size="small"
-          >
-            Invite
-          </Button>
-          <Button
-            onClick={() => nav("/profile")}
-            variant="contained"
-            size="small"
-          >
-            Profile
-          </Button>
-        </div>
-        <Container maxWidth="800px">
-          <h1>Users</h1>
-          {userList && userList.length !== 0 ? (
-            userList.map((user) => (
-              <div key={user._id}>
-                <TextField value={user.email} size="small"></TextField>
-                <p>
-                  <Select
-                    value={selectedRole}
-                    defaultValue={() => setSelectedRole(user.role)}
-                    onChange={(e) => setSelectedRole(e.target.value)}
-                    size="small"
-                  >
-                    <MenuItem
-                      value="user"
-                      // selected={user.role === "user" ? true : false}
-                    >
-                      User
-                    </MenuItem>
-                    <MenuItem
-                      value="admin"
-                      // selected={user.role === "user" ? true : false}
-                    >
-                      Admin
-                    </MenuItem>
-                    <MenuItem
-                      value="owner"
-                      // selected={user.role === "user" ? true : false}
-                    >
-                      Owner
-                    </MenuItem>
-                  </Select>
-                  <Button
-                    disabled={user.role !== selectedRole ? false : true}
-                    onClick={promoteUser}
-                    size="small"
-                    variant="contained"
-                  >
-                    Save
-                  </Button>
-                </p>
-              </div>
-            ))
-          ) : (
-            <div>No users</div>
-          )}
-        </Container>
-      </div>
+      <h3>Users</h3>
+      <Button onClick={() => nav("/invite")} variant="contained" size="small">
+        Invite
+      </Button>
+      <br />
+      <Button onClick={() => nav("/profile")} variant="contained" size="small">
+        Profile
+      </Button>
+      <List
+      // sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      >
+        {userList.map((user, key) => (
+          <ListItem key={key}>
+            <ListItemText primary={user.email} />
+            <Select
+              id={user.email}
+              label="Role"
+              variant="outlined"
+              size="small"
+              defaultValue={user.role}
+              onChange={(e) => {
+                user.role = e.target.value;
+              }}
+              required
+            >
+              <MenuItem value="owner">owner</MenuItem>
+              <MenuItem value="admin">admin</MenuItem>
+              <MenuItem value="user">user</MenuItem>
+              <MenuItem value="storekeeper">storekeeper</MenuItem>
+            </Select>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => promoteUser(user)}
+            >
+              Save
+            </Button>
+          </ListItem>
+        ))}
+      </List>
     </>
   );
 };
