@@ -2,6 +2,9 @@ const router = require("express").Router();
 const User = require("../models/user");
 const Client = require("../models/client");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+const saltRounds = 10;
 
 router.post("/signup", async (req, res) => {
   if (!req.body?.email || !req.body.password) return res.sendStatus(400);
@@ -9,9 +12,14 @@ router.post("/signup", async (req, res) => {
   const users = await User.find({ email: req.body.email });
   if (users.length) return res.sendStatus(409);
 
+  // hash the password
+  const myPlaintextPassword = `${req.body.password}`;
+  if (myPlaintextPassword.length < 4) return res.sendStatus(406);
+  const hashedPassword = await bcrypt.hash(myPlaintextPassword, saltRounds);
+
   await User.create({
     email: req.body.email,
-    password: req.body.password, // hash password !!!!
+    password: hashedPassword,
   });
 
   res.sendStatus(200);
@@ -30,8 +38,13 @@ router.post("/login", async (req, res) => {
   // hash!!!
   const users = await User.find({
     email: req.body.email,
-    password: req.body.password,
+    // password: req.body.password,
   });
+
+  const myPlaintextPassword = req.body.password;
+  const hash = users[0].password;
+  const result = await bcrypt.compare(myPlaintextPassword, hash);
+  if (!result) return res.sendStatus(406);
 
   console.log(users);
 
