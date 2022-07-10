@@ -17,6 +17,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDetails } from "../providers/details";
 import { useEffect } from "react";
+import "../css/NewOrder.css";
+
 const NewOrder = () => {
   const navigate = useNavigate();
   const { userDetails, companyDetails, getCompanies } = useDetails();
@@ -73,7 +75,8 @@ const NewOrder = () => {
     const body = {
       companyId: companyDetails._id,
       order: {
-        orderedBy: userDetails.email,
+        orderedBy: userDetails._id,
+        email: userDetails.email,
         orderList,
       },
     };
@@ -105,91 +108,144 @@ const NewOrder = () => {
 
   return (
     <>
-      <div>NewOrder</div>
-      <Button onClick={() => nav("/orders")} variant="contained" size="small">
-        Orders
-      </Button>
-      {orderList && orderList?.length > 0 ? (
-        <div>
-          <List
-          // sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-          >
-            {orderList.map((item, key) => (
-              <ListItem key={key}>
-                <ListItemText primary={item.name} />
-                <ListItemText primary={`Qty: ${item.quantity}`} />
-                <ListItemText primary={`Unit: ${item.unit}`} />
-                <Button
-                  onClick={() => deleteItem(item)}
-                  variant="contained"
-                  size="small"
+      <section className="sectionContainerNewOrder">
+        <Button
+          onClick={() => nav("/orders")}
+          variant="contained"
+          size="small"
+          style={{ marginTop: "5px", marginBottom: "5px" }}
+        >
+          Orders
+        </Button>
+        <div>New order</div>
+        {orderList && orderList?.length > 0 ? (
+          <div>
+            <List
+            // sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            >
+              {orderList.map((item, key) => (
+                <ListItem
+                  key={key}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                    justifyContent: "space-between",
+                    padding: "0px",
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                  }}
                 >
-                  Delete
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-          <Button onClick={placeOrder} variant="contained" size="small">
-            Place order
-          </Button>
-        </div>
-      ) : (
-        ""
-      )}
-      <Autocomplete
-        className="container"
-        inputValue={selectedItem}
-        onInputChange={(event, newInputValue) => {
-          setSelectedItem((event) => newInputValue);
-        }}
-        id="controllable-states-demo"
-        options={itemList}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Items" />}
-      />
-      {selectedItemDetails ? (
-        <div>
-          <TextField
-            value={selectedItemDetails.name}
-            size="small"
-            label="Name"
-          ></TextField>
-          <TextField
-            value={editedItemQuantity}
-            onChange={(e) => setEditedItemQuantity(e.target.value)}
-            size="small"
-            label="Quantity"
-          ></TextField>
-          <Select
-            id="outlined-basic"
-            label="Unit"
-            variant="outlined"
-            size="small"
-            required
-            value={editedItemUnit}
-            onChange={(e) => setEditedItemUnit(e.target.value)}
-            defaultValue={editedItemUnit}
-          >
-            <MenuItem value="piece">piece</MenuItem>
-            <MenuItem value="kg">kg</MenuItem>
-            <MenuItem value="l">l</MenuItem>
-            <MenuItem value="m">m</MenuItem>
-            <MenuItem value="m2">m2</MenuItem>
-            <MenuItem value="m3">m3</MenuItem>
-          </Select>
-          <br />
-          <Button
-            onClick={addToOrderList}
-            variant="contained"
-            size="small"
-            disabled={editedItemQuantity > 0 && editedItemUnit ? false : true}
-          >
-            Add to list
-          </Button>
-        </div>
-      ) : (
-        ""
-      )}
+                  <ListItemText primary={item.name} />
+                  <ListItemText
+                    primary={item.quantity}
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      paddingRight: "5px",
+                    }}
+                  />
+                  <ListItemText primary={item.unit} />
+                  <Button
+                    onClick={() => deleteItem(item)}
+                    variant="contained"
+                    size="small"
+                  >
+                    Delete
+                  </Button>
+                </ListItem>
+              ))}
+            </List>
+            <Button onClick={placeOrder} variant="contained" size="small">
+              Place order
+            </Button>
+          </div>
+        ) : (
+          ""
+        )}
+        <Autocomplete
+          className="container"
+          inputValue={selectedItem}
+          onInputChange={(event, newInputValue) => {
+            setSelectedItem((event) => newInputValue);
+          }}
+          id="controllable-states-demo"
+          options={itemList}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Items"
+              style={{
+                width: "100%",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
+            />
+          )}
+        />
+        {selectedItemDetails ? (
+          <div>
+            <TextField
+              value={selectedItemDetails.name}
+              size="small"
+              label="Name"
+              style={{
+                width: "100%",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
+            ></TextField>
+            <TextField
+              value={editedItemQuantity}
+              onChange={(e) => setEditedItemQuantity(e.target.value)}
+              size="small"
+              label="Quantity"
+              style={{
+                width: "60%",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
+            ></TextField>
+            <Select
+              id="outlined-basic"
+              label="Unit"
+              variant="outlined"
+              size="small"
+              required
+              value={editedItemUnit}
+              onChange={(e) => setEditedItemUnit(e.target.value)}
+              defaultValue={editedItemUnit}
+              style={{
+                width: "40%",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
+            >
+              <MenuItem value="piece">piece</MenuItem>
+              <MenuItem value="kg">kg</MenuItem>
+              <MenuItem value="l">l</MenuItem>
+              <MenuItem value="m">m</MenuItem>
+              <MenuItem value="m2">m2</MenuItem>
+              <MenuItem value="m3">m3</MenuItem>
+            </Select>
+            <br />
+            <Button
+              onClick={addToOrderList}
+              variant="contained"
+              size="small"
+              disabled={editedItemQuantity > 0 && editedItemUnit ? false : true}
+            >
+              Add to list
+            </Button>
+          </div>
+        ) : (
+          ""
+        )}
+      </section>
     </>
   );
 };

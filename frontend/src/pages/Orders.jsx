@@ -28,31 +28,26 @@ const Orders = () => {
 
   return (
     <>
-      <div>Orders</div>
-      <Button
-        onClick={() => nav("/new-order")}
-        variant="contained"
-        size="small"
-      >
-        New order
-      </Button>
-      <Button onClick={() => nav("/profile")} variant="contained" size="small">
-        Profile
-      </Button>
-      {orders && orders.length > 0 ? (
-        orders.map((order) => (
-          <div key={order._id}>
-            <div>Your orders</div>
-            <div>
-              {userDetails.filter((user) => user._id === order.orderedBy)}
-            </div>
-            <div>{order.quantity}</div>
-            <div>{order.price}</div>
-          </div>
-        ))
-      ) : (
-        <div>No orders</div>
-      )}
+      <section className="sectionContainerOrders">
+        <Button
+          onClick={() => nav("/profile")}
+          variant="contained"
+          size="small"
+          style={{ marginTop: "5px", marginBottom: "5px" }}
+        >
+          Profile
+        </Button>
+        <h3>Orders</h3>
+
+        <Button
+          onClick={() => nav("/new-order")}
+          variant="contained"
+          size="small"
+          style={{ marginTop: "5px", marginBottom: "5px" }}
+        >
+          New order
+        </Button>
+      </section>
     </>
   );
 };

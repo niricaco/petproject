@@ -83,17 +83,18 @@ const Items = () => {
 
   return (
     <>
-      <section>
+      <section className="sectionContainerItems">
         <Button
           onClick={() => nav("/profile")}
           variant="contained"
           size="small"
+          style={{ marginTop: "5px", marginBottom: "5px" }}
         >
           Profile
         </Button>
         <h3>Items</h3>
         {companyDetails ? (
-          <div>
+          <>
             {role === "user" || role === "admin" ? (
               ""
             ) : (
@@ -101,6 +102,7 @@ const Items = () => {
                 onClick={() => nav("/new-item")}
                 variant="contained"
                 size="small"
+                style={{ marginTop: "5px", marginBottom: "5px" }}
               >
                 Add new item
               </Button>
@@ -113,22 +115,41 @@ const Items = () => {
               }}
               id="controllable-states-demo"
               options={itemList}
-              sx={{ width: 300 }}
+              style={{
+                width: "100%",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
               renderInput={(params) => <TextField {...params} label="Items" />}
             />
             {selectedItemDetails ? (
-              <div>
+              <>
                 <TextField
                   value={editedItemName}
                   onChange={(e) => setEditedItemName(e.target.value)}
                   size="small"
                   label="Name"
+                  defaultValue={selectedItemDetails.name}
+                  style={{
+                    width: "100%",
+                    padding: "0px",
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                  }}
                 ></TextField>
                 <TextField
                   value={editedItemQuantity}
                   onChange={(e) => setEditedItemQuantity(e.target.value)}
                   size="small"
                   label="Quantity"
+                  defaultValue={selectedItemDetails.quantity}
+                  style={{
+                    width: "100%",
+                    padding: "0px",
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                  }}
                 ></TextField>
                 <br />
                 {role === "user" ? (
@@ -138,6 +159,7 @@ const Items = () => {
                     onClick={updateItem}
                     variant="contained"
                     size="small"
+                    style={{ marginTop: "5px", marginBottom: "5px" }}
                     disabled={
                       selectedItemDetails.name !== editedItemName ||
                       Number(selectedItemDetails.quantity) !==
@@ -150,11 +172,11 @@ const Items = () => {
                     Save
                   </Button>
                 )}
-              </div>
+              </>
             ) : (
               "No item selected"
             )}
-          </div>
+          </>
         ) : (
           ""
         )}

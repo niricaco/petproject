@@ -3,8 +3,12 @@ const itemSchema = require("./item");
 
 const orderSchema = new mongoose.Schema({
   orderedBy: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
+  },
+  email: {
+    type: String,
     required: true,
   },
   confirmed: {

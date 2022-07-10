@@ -1,12 +1,12 @@
-.sectionContainerHome {
+.sectionContainerNewItem {
   margin: 0 auto; 
-  padding-top:40px;
+  padding-top: 10vh;
   width: calc(100vw - 15vw);
   max-width: 600px;
-  height: 30vh;
+  height: 70vh;
   min-height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: stretch;
 }

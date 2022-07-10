@@ -55,24 +55,20 @@ const Profile = () => {
             ) : (
               ""
             )}
-            <div>
-              <Button
-                onClick={() => nav("/orders")}
-                variant="contained"
-                size="small"
-              >
-                Orders
-              </Button>
-            </div>
-            <div>
-              <Button
-                onClick={() => nav("/items")}
-                variant="contained"
-                size="small"
-              >
-                Items
-              </Button>
-            </div>
+            <Button
+              onClick={() => nav("/orders")}
+              variant="contained"
+              size="small"
+            >
+              Orders
+            </Button>
+            <Button
+              onClick={() => nav("/items")}
+              variant="contained"
+              size="small"
+            >
+              Items
+            </Button>
           </>
         ) : (
           <div>

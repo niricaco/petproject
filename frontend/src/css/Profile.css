@@ -1,11 +1,9 @@
 .sectionContainerProfile {
   margin: 0 auto; 
-  padding-top:40px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-top:10vh;
   width: calc(100vw - 15vw);
   max-width: 600px;
-  height: 30vh;
+  height: 40vh;
   min-height: fit-content;
   display: flex;
   flex-direction: column;

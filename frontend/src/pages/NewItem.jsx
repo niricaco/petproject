@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Input, TextField, Select, MenuItem } from "@mui/material";
-import "../css/Items.css";
+import "../css/NewItem.css";
 import { stockApi } from "../apis/stockApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -46,61 +46,69 @@ const NewItem = () => {
 
   return (
     <>
-      <div>NewItems</div>
-      {companyDetails ? (
-        <div>
-          <TextField
-            id="outlined-basic"
-            label="Item name"
-            variant="outlined"
-            size="small"
-            required
-            value={itemName}
-            onChange={(e) => setItemName(e.target.value)}
-          />
-          <TextField
-            id="outlined-basic"
-            label="Quantity"
-            variant="outlined"
-            size="small"
-            type="number"
-            required
-            value={itemQuantity}
-            onChange={(e) => setItemQuantity(e.target.value)}
-          />
-          <Select
-            id="outlined-basic"
-            label="Unit"
-            variant="outlined"
-            size="small"
-            required
-            value={itemUnit}
-            onChange={(e) => setItemUnit(e.target.value)}
-          >
-            <MenuItem value="piece">piece</MenuItem>
-            <MenuItem value="kg">kg</MenuItem>
-            <MenuItem value="l">l</MenuItem>
-            <MenuItem value="m">m</MenuItem>
-            <MenuItem value="m2">m2</MenuItem>
-            <MenuItem value="m3">m3</MenuItem>
-          </Select>
-          <Button onClick={addItem} variant="contained" size="small">
-            Add item
-          </Button>
-
-          <div>
+      <section className="sectionContainerNewItem">
+        <Button
+          onClick={() => nav("/items")}
+          variant="contained"
+          size="small"
+          style={{ marginTop: "5px", marginBottom: "5px" }}
+        >
+          Items
+        </Button>
+        <h3>Add item</h3>
+        {companyDetails ? (
+          <>
+            <TextField
+              id="outlined-basic"
+              label="Item name"
+              variant="outlined"
+              size="small"
+              required
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+              style={{ marginTop: "5px", marginBottom: "5px" }}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Quantity"
+              variant="outlined"
+              size="small"
+              type="number"
+              required
+              value={itemQuantity}
+              onChange={(e) => setItemQuantity(e.target.value)}
+              style={{ marginTop: "5px", marginBottom: "5px" }}
+            />
+            <Select
+              id="outlined-basic"
+              label="Unit"
+              variant="outlined"
+              size="small"
+              required
+              value={itemUnit}
+              onChange={(e) => setItemUnit(e.target.value)}
+              style={{ marginTop: "5px", marginBottom: "5px" }}
+            >
+              <MenuItem value="piece">piece</MenuItem>
+              <MenuItem value="kg">kg</MenuItem>
+              <MenuItem value="l">l</MenuItem>
+              <MenuItem value="m">m</MenuItem>
+              <MenuItem value="m2">m2</MenuItem>
+              <MenuItem value="m3">m3</MenuItem>
+            </Select>
             <Button
-              onClick={() => nav("/items")}
+              onClick={addItem}
               variant="contained"
               size="small"
+              style={{ marginTop: "5px", marginBottom: "5px" }}
             >
-              Items
+              Add item
             </Button>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
+          </>
+        ) : (
+          ""
+        )}
+      </section>
     </>
   );
 };

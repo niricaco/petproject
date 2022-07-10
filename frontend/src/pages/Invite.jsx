@@ -2,9 +2,9 @@ import { Button, TextField } from "@mui/material";
 import React from "react";
 import { stockApi } from "../apis/stockApi";
 import { useState } from "react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDetails } from "../providers/details";
+import "../css/Invite.css";
 
 const Invite = () => {
   const navigate = useNavigate();
@@ -31,26 +31,28 @@ const Invite = () => {
 
   return (
     <>
-      <h3>Invite a user</h3>
-      <TextField
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        size="small"
-        label="Email"
-      ></TextField>
-      <br />
-      <Button
-        variant="contained"
-        size="small"
-        onClick={inviteUser}
-        disabled={!email}
-      >
-        Invite
-      </Button>
-      <br />
-      <Button onClick={() => nav("/users")} variant="contained" size="small">
-        Users
-      </Button>
+      <section className="sectionContainerInvite">
+        <h3>Invite a user</h3>
+        <TextField
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          size="small"
+          label="Email"
+        ></TextField>
+        <br />
+        <Button
+          variant="contained"
+          size="small"
+          onClick={inviteUser}
+          disabled={!email}
+        >
+          Invite
+        </Button>
+        <br />
+        <Button onClick={() => nav("/users")} variant="contained" size="small">
+          Users
+        </Button>
+      </section>
     </>
   );
 };
