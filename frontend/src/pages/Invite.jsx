@@ -32,6 +32,9 @@ const Invite = () => {
   return (
     <>
       <section className="sectionContainerInvite">
+        <Button onClick={() => nav("/users")} variant="contained" size="small">
+          Users
+        </Button>
         <h3>Invite a user</h3>
         <TextField
           value={email}
@@ -39,7 +42,6 @@ const Invite = () => {
           size="small"
           label="Email"
         ></TextField>
-        <br />
         <Button
           variant="contained"
           size="small"
@@ -47,10 +49,6 @@ const Invite = () => {
           disabled={!email}
         >
           Invite
-        </Button>
-        <br />
-        <Button onClick={() => nav("/users")} variant="contained" size="small">
-          Users
         </Button>
       </section>
     </>

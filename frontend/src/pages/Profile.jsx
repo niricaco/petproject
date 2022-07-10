@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import "../css/Profile.css";
 import { stockApi } from "../apis/stockApi";
 import { useState } from "react";
@@ -71,16 +71,29 @@ const Profile = () => {
             </Button>
           </>
         ) : (
-          <div>
-            <Button onClick={joinCompany}>Join to a companyDetails</Button>
-            <Input
+          <>
+            <TextField
               type="text"
               placeholder="Company name"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
+              style={{ marginTop: "5px", marginBottom: "5px" }}
             />
-            <Button onClick={createCompany}>Create a companyDetails</Button>
-          </div>
+            <Button
+              onClick={createCompany}
+              variant="contained"
+              style={{ marginTop: "5px", marginBottom: "5px" }}
+            >
+              Create a company
+            </Button>
+            <Button
+              onClick={joinCompany}
+              variant="contained"
+              style={{ marginTop: "15vh", marginBottom: "5px" }}
+            >
+              Join to a company
+            </Button>
+          </>
         )}
       </section>
     </>

@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../providers/auth";
 import Button from "@mui/material/Button";
-import Input from "@mui/material/Input";
+import TextField from "@mui/material/TextField";
+import "../css/Register.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -26,32 +27,56 @@ const Register = () => {
 
   return (
     <>
-      <section>
-        <div>Register</div>
+      <section className="sectionContainerRegister">
+        <h3>Register</h3>
         <form>
-          <Input
+          <TextField
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "0px",
+              marginTop: "5px",
+              marginBottom: "5px",
+            }}
           />
-          <Input
+          <TextField
             type="text"
             placeholder="Firstname"
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "0px",
+              marginTop: "5px",
+              marginBottom: "5px",
+            }}
           />
-          <Input
+          <TextField
             type="text"
             placeholder="Lastname"
             value={lastname}
             onChange={(e) => setLastname(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "0px",
+              marginTop: "5px",
+              marginBottom: "5px",
+            }}
           />
-          <Input
+          <TextField
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "0px",
+              marginTop: "5px",
+              marginBottom: "5px",
+            }}
           />
         </form>
         <Button
