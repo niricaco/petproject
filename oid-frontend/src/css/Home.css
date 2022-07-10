@@ -1,0 +1,12 @@
+.sectionContainerHome {
+  margin: 0 auto; 
+  padding-top: 0;
+  width: calc(100vw - 15vw);
+  max-width: 600px;
+  height: 70vh;
+  min-height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: stretch;
+}

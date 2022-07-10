@@ -2,6 +2,8 @@ import { React, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { oidApi } from "../api/oidApi";
 import { useSearchParams } from "react-router-dom";
+import { TextField } from "@mui/material";
+import "../css/Home.css";
 
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -53,28 +55,58 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Home</h1>
-      {error && <div>{error}</div>}
-      {!error && (
-        <div>
-          <input
-            placeholder="Username"
-            type="text"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-          <input
-            placeholder="Password"
-            type="text"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-          <button onClick={login}>Login</button>
-          <button onClick={signup}>Signup</button>
-        </div>
-      )}
-    </div>
+    <>
+      <section className="sectionContainerHome">
+        <h3>Home</h3>
+        {error && <div>{error}</div>}
+        {!error && (
+          <>
+            <TextField
+              placeholder="Email"
+              label="Email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              style={{
+                width: "100%",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
+            />
+            <TextField
+              placeholder="Password"
+              label="Password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              style={{
+                width: "100%",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
+            />
+            <Button
+              onClick={login}
+              variant="contained"
+              style={{ marginTop: "5px", marginBottom: "5px" }}
+              disabled={!email || !email.includes("@") || !password}
+            >
+              Login
+            </Button>
+            <Button
+              onClick={signup}
+              variant="contained"
+              disabled={!email || !email.includes("@") || !password}
+              style={{ marginTop: "5px", marginBottom: "5px" }}
+            >
+              Signup
+            </Button>
+          </>
+        )}
+      </section>
+    </>
   );
 };
 

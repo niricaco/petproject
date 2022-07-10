@@ -54,7 +54,6 @@ const Users = () => {
   return (
     <>
       <section className="sectionContainerUsers">
-        <h3>Users</h3>
         <Button
           style={{ marginTop: "5px", marginBottom: "5px" }}
           onClick={() => nav("/profile")}
@@ -63,7 +62,7 @@ const Users = () => {
         >
           Profile
         </Button>
-        <br />
+        <h3>Users</h3>
         <Button
           onClick={() => nav("/invite")}
           variant="contained"
