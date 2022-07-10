@@ -46,7 +46,7 @@ describe("POST requests to api/dashboards/work", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     await dummyCompany1.save();
@@ -77,7 +77,7 @@ describe("POST requests to api/dashboards/work", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     await dummyCompany1.save();
@@ -108,7 +108,7 @@ describe("POST requests to api/dashboards/work", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     await dummyCompany1.save();
@@ -163,7 +163,7 @@ describe("DELETE requests to api/dashboards/works/:name", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const work = "Разработка приложения";
@@ -195,7 +195,7 @@ describe("DELETE requests to api/dashboards/works/:name", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const work = "Разработка приложения";
@@ -228,7 +228,7 @@ describe("DELETE requests to api/dashboards/works/:name", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const work = "Разработка приложения";

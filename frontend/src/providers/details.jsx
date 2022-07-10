@@ -41,7 +41,7 @@ const DetailsProvider = ({ children }) => {
   };
 
   const getCompanies = async () => {
-    const response = await post("/company/byuserid", {
+    const response = await post("/company/byuseremail", {
       email: userDetails.email,
     });
     if (!response.data) return setCompanyDetails(null);

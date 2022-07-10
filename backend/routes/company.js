@@ -10,7 +10,7 @@ const {
 } = require("../controllers/company");
 
 // get companies by userId
-router.post("/byuserid", auth({ block: true }), getCompaniesByUserEmail);
+router.post("/byuseremail", auth({ block: true }), getCompaniesByUserEmail);
 
 // join in company
 router.post("/join", auth({ block: true }), joinCompany);

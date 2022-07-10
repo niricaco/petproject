@@ -56,6 +56,8 @@ describe("POST requests to api/company/create", () => {
     const name = "companyname";
     const body = {
       name,
+      role: "owner",
+      email: "boss",
     };
 
     // when
@@ -79,7 +81,7 @@ describe("POST requests to api/company/create", () => {
       name,
       userId: mockObjectId,
       role: "owner",
-      username: "boss",
+      email: "boss",
     };
 
     // when
@@ -97,7 +99,7 @@ describe("POST requests to api/company/create", () => {
   });
 });
 
-describe("GET requests to api/company/names", () => {
+describe("POST requests to api/company/byuseremail", () => {
   let connection;
   let server;
   let client;
@@ -119,80 +121,12 @@ describe("GET requests to api/company/names", () => {
 
   test("should return 401 without auth header", async () => {
     // given
-
-    // when
-    const response = await client.get("/api/company/names").set({}).send({});
-
-    // then
-    expect(response.status).toBe(401);
-  });
-
-  test("should find existing names and return 200", async () => {
-    // given
-    const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
-    const name1 = "Energo";
-    const mockObjectId1 = new mongoose.Types.ObjectId();
-    const dummyCompany1 = new CompanyEntity({
-      name: name1,
-      roles: {
-        role: "owner",
-        userId: mockObjectId1,
-        username: "bossy",
-      },
-    });
-    await dummyCompany1.save();
-    const name2 = "Energo2";
-    const mockObjectId2 = new mongoose.Types.ObjectId();
-    const dummyCompany2 = new CompanyEntity({
-      name: name2,
-      roles: {
-        role: "owner",
-        userId: mockObjectId2,
-        username: "boss",
-      },
-    });
-    await dummyCompany2.save();
 
     // when
     const response = await client
-      .get("/api/company/names")
-      .set({ authorization: token })
-      .send();
-
-    // then
-    const companies = response.body.companies;
-    expect(companies).toHaveLength(2);
-    expect(companies[0].name).toBe(name1);
-    expect(companies[1].name).toBe(name2);
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("GET requests to api/company/byuserid", () => {
-  let connection;
-  let server;
-  let client;
-
-  beforeAll(async () => {
-    const result = await startDb();
-    connection = result[0];
-    server = result[1];
-    client = mockServer.agent(app);
-  });
-
-  afterAll(async () => {
-    await stopDb(connection, server);
-  });
-
-  afterEach(async () => {
-    await deleteAll(CompanyEntity);
-  });
-
-  test("should return 401 without auth header", async () => {
-    // given
-
-    // when
-    const response = await client.get("/api/company/byuserid").set({}).send({});
+      .post("/api/company/byuseremail")
+      .set({})
+      .send({});
 
     // then
     expect(response.status).toBe(401);
@@ -208,7 +142,7 @@ describe("GET requests to api/company/byuserid", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "bossy",
+        email: "bossy",
       },
     });
     await dummyCompany1.save();
@@ -219,24 +153,23 @@ describe("GET requests to api/company/byuserid", () => {
       roles: {
         role: "owner",
         userId: mockObjectId2,
-        username: "boss",
+        email: "boss",
       },
     });
     await dummyCompany2.save();
     const body = {
-      userId: mockObjectId1,
+      email: "bossy",
     };
 
     // when
     const response = await client
-      .get("/api/company/byuserid")
+      .post("/api/company/byuseremail")
       .set({ authorization: token })
       .send(body);
 
     // then
     expect(response.status).toBe(200);
-    const companies = response.body;
-    expect(companies).toHaveLength(1);
-    expect(companies[0].name).toBe(name1);
+    const company = response.body;
+    expect(company.name).toBe(name1);
   });
 });

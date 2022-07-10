@@ -8,7 +8,7 @@ const {
   promoteUser,
 } = require("../controllers/user");
 const {
-  getWorkAndSpecialization,
+  // getWorkAndSpecialization,
   setWorkAndSpecialization,
 } = require("../controllers/workAndSpecialization");
 const {
@@ -28,11 +28,11 @@ router.get("/", auth({ block: true }), userDetials);
 // router.get("/users", auth({ block: true }), getAllUsers);
 
 // get the user's work and specialization
-router.get(
-  "/getworkandspecialization",
-  auth({ block: true }),
-  getWorkAndSpecialization
-);
+// router.get(
+//   "/getworkandspecialization",
+//   auth({ block: true }),
+//   getWorkAndSpecialization
+// );
 
 // get all users
 router.post("/users", auth({ block: true }), getAllUsers);
@@ -47,11 +47,11 @@ router.post("/item", auth({ block: true }), addItem);
 router.post("/work", auth({ block: true }), createWork);
 
 // set the user's work and specialization
-router.post(
+/* router.post(
   "/setworkandspecialization",
   auth({ Block: true }),
   setWorkAndSpecialization
-);
+); */
 
 // update an item by id
 router.put("/item", auth({ block: true }), updateItem);

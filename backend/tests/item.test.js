@@ -46,7 +46,7 @@ describe("POST requests to api/dashboard/item", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     await dummyCompany1.save();
@@ -73,7 +73,7 @@ describe("POST requests to api/dashboard/item", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     await dummyCompany1.save();
@@ -107,7 +107,7 @@ describe("POST requests to api/dashboard/item", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     await dummyCompany1.save();
@@ -134,7 +134,136 @@ describe("POST requests to api/dashboard/item", () => {
   });
 });
 
-describe("GET requests to api/dashboard/items", () => {
+// describe("POST requests to api/dashboard/items", () => {
+//   let connection;
+//   let server;
+//   let client;
+
+//   beforeAll(async () => {
+//     const result = await startDb();
+//     connection = result[0];
+//     server = result[1];
+//     client = mockServer.agent(app);
+//   });
+
+//   afterAll(async () => {
+//     await stopDb(connection, server);
+//   });
+
+//   afterEach(async () => {
+//     await deleteAll(CompanyEntity);
+//   });
+
+//   test("should return 401 without auth header", async () => {
+//     // given
+//     const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
+//     const name1 = "Energo";
+//     const mockObjectId1 = new mongoose.Types.ObjectId();
+//     const dummyCompany1 = new CompanyEntity({
+//       name: name1,
+//       roles: {
+//         role: "owner",
+//         userId: mockObjectId1,
+//         email: "boss",
+//       },
+//     });
+//     const item1 = {
+//       name: "itemname1",
+//     };
+//     const item2 = {
+//       name: "itemname2",
+//     };
+//     dummyCompany1.items.push(item1);
+//     dummyCompany1.items.push(item2);
+//     await dummyCompany1.save();
+//     const body = { companyId: dummyCompany1._id };
+
+//     // when
+//     const response = await client
+//       .post("/api/dashboards/items")
+//       .set({})
+//       .send(body);
+
+//     // then
+//     expect(response.status).toBe(401);
+//   });
+
+//   test("should return 400 without companyId", async () => {
+//     // given
+//     const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
+//     const name1 = "Energo";
+//     const mockObjectId1 = new mongoose.Types.ObjectId();
+//     const dummyCompany1 = new CompanyEntity({
+//       name: name1,
+//       roles: {
+//         role: "owner",
+//         userId: mockObjectId1,
+//         email: "boss",
+//       },
+//     });
+//     const item1 = {
+//       name: "itemname1",
+//     };
+//     const item2 = {
+//       name: "itemname2",
+//     };
+//     dummyCompany1.items.push(item1);
+//     dummyCompany1.items.push(item2);
+//     await dummyCompany1.save();
+//     const body = {};
+
+//     // when
+//     const response = await client
+//       .post("/api/dashboards/items")
+//       .set({ authorization: token })
+//       .send(body);
+
+//     // then
+//     expect(response.status).toBe(400);
+//   });
+
+//   test("should add item with correct body and return 200", async () => {
+//     // given
+//     const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
+//     const name1 = "Energo";
+//     const mockObjectId1 = new mongoose.Types.ObjectId();
+//     const dummyCompany1 = new CompanyEntity({
+//       name: name1,
+//       roles: {
+//         role: "owner",
+//         userId: mockObjectId1,
+//         email: "boss",
+//       },
+//     });
+//     const item1 = {
+//       name: "itemname1",
+//     };
+//     const item2 = {
+//       name: "itemname2",
+//     };
+//     dummyCompany1.items.push(item1);
+//     dummyCompany1.items.push(item2);
+//     await dummyCompany1.save();
+//     const body = {
+//       companyId: dummyCompany1._id,
+//     };
+
+//     // when
+//     const response = await client
+//       .post("/api/dashboards/items")
+//       .set({ authorization: token })
+//       .send(body);
+
+//     // then
+//     const company = await CompanyEntity.findOne({ name: name1 });
+//     expect(company.items).toHaveLength(2);
+//     expect(company.items[0].name).toBe(item1.name);
+//     expect(company.items[1].name).toBe(item2.name);
+//     expect(response.status).toBe(200);
+//   });
+// });
+
+describe("PUT requests to api/dashboard/item", () => {
   let connection;
   let server;
   let client;
@@ -164,136 +293,7 @@ describe("GET requests to api/dashboard/items", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
-      },
-    });
-    const item1 = {
-      name: "itemname1",
-    };
-    const item2 = {
-      name: "itemname2",
-    };
-    dummyCompany1.items.push(item1);
-    dummyCompany1.items.push(item2);
-    await dummyCompany1.save();
-    const body = { companyId: dummyCompany1._id };
-
-    // when
-    const response = await client
-      .get("/api/dashboards/items")
-      .set({})
-      .send(body);
-
-    // then
-    expect(response.status).toBe(401);
-  });
-
-  test("should return 400 without companyId", async () => {
-    // given
-    const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
-    const name1 = "Energo";
-    const mockObjectId1 = new mongoose.Types.ObjectId();
-    const dummyCompany1 = new CompanyEntity({
-      name: name1,
-      roles: {
-        role: "owner",
-        userId: mockObjectId1,
-        username: "boss",
-      },
-    });
-    const item1 = {
-      name: "itemname1",
-    };
-    const item2 = {
-      name: "itemname2",
-    };
-    dummyCompany1.items.push(item1);
-    dummyCompany1.items.push(item2);
-    await dummyCompany1.save();
-    const body = {};
-
-    // when
-    const response = await client
-      .get("/api/dashboards/items")
-      .set({ authorization: token })
-      .send(body);
-
-    // then
-    expect(response.status).toBe(400);
-  });
-
-  test("should add item with correct body and return 200", async () => {
-    // given
-    const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
-    const name1 = "Energo";
-    const mockObjectId1 = new mongoose.Types.ObjectId();
-    const dummyCompany1 = new CompanyEntity({
-      name: name1,
-      roles: {
-        role: "owner",
-        userId: mockObjectId1,
-        username: "boss",
-      },
-    });
-    const item1 = {
-      name: "itemname1",
-    };
-    const item2 = {
-      name: "itemname2",
-    };
-    dummyCompany1.items.push(item1);
-    dummyCompany1.items.push(item2);
-    await dummyCompany1.save();
-    const body = {
-      companyId: dummyCompany1._id,
-    };
-
-    // when
-    const response = await client
-      .get("/api/dashboards/items")
-      .set({ authorization: token })
-      .send(body);
-
-    // then
-    const company = await CompanyEntity.findOne({ name: name1 });
-    expect(company.items).toHaveLength(2);
-    expect(company.items[0].name).toBe(item1.name);
-    expect(company.items[1].name).toBe(item2.name);
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("PUT requests to api/dashboard/items/:id", () => {
-  let connection;
-  let server;
-  let client;
-
-  beforeAll(async () => {
-    const result = await startDb();
-    connection = result[0];
-    server = result[1];
-    client = mockServer.agent(app);
-  });
-
-  afterAll(async () => {
-    await stopDb(connection, server);
-  });
-
-  afterEach(async () => {
-    await deleteAll(CompanyEntity);
-  });
-
-  test("should return 401 without auth header", async () => {
-    // given
-    const token = jwt.sign({}, process.env.JWT_SECRET_KEY);
-    const name1 = "Energo";
-    const mockObjectId1 = new mongoose.Types.ObjectId();
-    const dummyCompany1 = new CompanyEntity({
-      name: name1,
-      roles: {
-        role: "owner",
-        userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const item1 = {
@@ -317,7 +317,7 @@ describe("PUT requests to api/dashboard/items/:id", () => {
 
     // when
     const response = await client
-      .put("/api/dashboards/items/:id")
+      .put("/api/dashboards/item")
       .set({})
       .send(body);
 
@@ -335,7 +335,7 @@ describe("PUT requests to api/dashboard/items/:id", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const item1 = {
@@ -359,7 +359,7 @@ describe("PUT requests to api/dashboard/items/:id", () => {
 
     // when
     const response = await client
-      .put("/api/dashboards/items/:id")
+      .put("/api/dashboards/item")
       .set({ authorization: token })
       .send();
 
@@ -377,7 +377,7 @@ describe("PUT requests to api/dashboard/items/:id", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const item1 = {
@@ -402,7 +402,7 @@ describe("PUT requests to api/dashboard/items/:id", () => {
 
     // when
     const response = await client
-      .put("/api/dashboards/items/:id")
+      .put("/api/dashboards/item")
       .set({ authorization: token })
       .send(body);
 
@@ -446,7 +446,7 @@ describe("DELETE requests to api/dashboard/items/:id", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const item1 = {
@@ -485,7 +485,7 @@ describe("DELETE requests to api/dashboard/items/:id", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const item1 = {
@@ -524,7 +524,7 @@ describe("DELETE requests to api/dashboard/items/:id", () => {
       roles: {
         role: "owner",
         userId: mockObjectId1,
-        username: "boss",
+        email: "boss",
       },
     });
     const item1 = {
