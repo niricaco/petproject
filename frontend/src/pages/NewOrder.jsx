@@ -73,7 +73,7 @@ const NewOrder = () => {
     const body = {
       companyId: companyDetails._id,
       order: {
-        orderedBy: userDetails._id,
+        orderedBy: userDetails.email,
         orderList,
       },
     };

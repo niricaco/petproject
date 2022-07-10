@@ -12,12 +12,10 @@ const Profile = () => {
   const { post } = stockApi();
 
   const nav = (path) => {
-    console.log("rerouting");
     navigate(path);
   };
 
   const [companyName, setCompanyName] = useState("");
-  const [registrationCode, setRegistrationCode] = useState("");
 
   const createCompany = async () => {
     const response = await post("/company/create", {
@@ -27,8 +25,8 @@ const Profile = () => {
       username: userDetails.username,
       email: userDetails.email,
     });
+    if (response.status !== 200) return alert("Error creating company");
     getCompanies();
-    // setCompanyDetails(response.data);
   };
 
   const joinCompany = async () => {
@@ -43,59 +41,51 @@ const Profile = () => {
 
   return (
     <>
-      <section className="sectionContainer">
-        <div>
-          {companyDetails ? (
+      <section className="sectionContainerProfile">
+        {companyDetails ? (
+          <>
+            {role === "owner" ? (
+              <Button
+                onClick={() => nav("/users")}
+                variant="contained"
+                size="small"
+              >
+                Users
+              </Button>
+            ) : (
+              ""
+            )}
             <div>
-              {role === "owner" ? (
-                <Button
-                  onClick={() => nav("/users")}
-                  variant="contained"
-                  size="small"
-                >
-                  Users
-                </Button>
-              ) : (
-                ""
-              )}
-              <div>
-                <Button
-                  onClick={() => nav("/orders")}
-                  variant="contained"
-                  size="small"
-                >
-                  Orders
-                </Button>
-              </div>
-              <div>
-                <Button
-                  onClick={() => nav("/items")}
-                  variant="contained"
-                  size="small"
-                >
-                  Items
-                </Button>
-              </div>
+              <Button
+                onClick={() => nav("/orders")}
+                variant="contained"
+                size="small"
+              >
+                Orders
+              </Button>
             </div>
-          ) : (
             <div>
-              {/* <Input
-                type="text"
-                placeholder="Registration code"
-                value={registrationCode}
-                onChange={(e) => setRegistrationCode(e.target.value)}
-              /> */}
-              <Button onClick={joinCompany}>Join to a companyDetails</Button>
-              <Input
-                type="text"
-                placeholder="Company name"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-              />
-              <Button onClick={createCompany}>Create a companyDetails</Button>
+              <Button
+                onClick={() => nav("/items")}
+                variant="contained"
+                size="small"
+              >
+                Items
+              </Button>
             </div>
-          )}
-        </div>
+          </>
+        ) : (
+          <div>
+            <Button onClick={joinCompany}>Join to a companyDetails</Button>
+            <Input
+              type="text"
+              placeholder="Company name"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+            />
+            <Button onClick={createCompany}>Create a companyDetails</Button>
+          </div>
+        )}
       </section>
     </>
   );

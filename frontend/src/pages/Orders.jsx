@@ -5,6 +5,7 @@ import { stockApi } from "../apis/stockApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDetails } from "../providers/details";
+import { useEffect } from "react";
 
 const Orders = () => {
   const navigate = useNavigate();
@@ -12,9 +13,18 @@ const Orders = () => {
   const { post } = stockApi();
 
   const nav = (path) => {
-    console.log("rerouting");
     navigate(path);
   };
+
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    if (!companyDetails?.orders) return setOrders([]);
+    setOrders(companyDetails.orders);
+  }, [companyDetails]);
+
+  console.log(userDetails);
+  console.log(orders);
 
   return (
     <>
@@ -29,6 +39,20 @@ const Orders = () => {
       <Button onClick={() => nav("/profile")} variant="contained" size="small">
         Profile
       </Button>
+      {orders && orders.length > 0 ? (
+        orders.map((order) => (
+          <div key={order._id}>
+            <div>Your orders</div>
+            <div>
+              {userDetails.filter((user) => user._id === order.orderedBy)}
+            </div>
+            <div>{order.quantity}</div>
+            <div>{order.price}</div>
+          </div>
+        ))
+      ) : (
+        <div>No orders</div>
+      )}
     </>
   );
 };

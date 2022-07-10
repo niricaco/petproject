@@ -1,0 +1,12 @@
+nav {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 10px;
+  padding-right: 10px;
+  max-height: fit-content;
+  min-height: fit-content;
+  border-bottom: 1px solid rgb(255, 255, 255);
+}

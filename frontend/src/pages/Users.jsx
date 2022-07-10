@@ -1,21 +1,19 @@
 import {
   Button,
-  Input,
   Select,
   MenuItem,
-  TextField,
-  Container,
   List,
   ListItem,
   ListItemText,
+  TextField,
 } from "@mui/material";
 import React from "react";
-import { useAuth } from "../providers/auth";
 import { stockApi } from "../apis/stockApi";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDetails } from "../providers/details";
+import "../css/Users.css";
 
 const Users = () => {
   const navigate = useNavigate();
@@ -40,6 +38,7 @@ const Users = () => {
     };
     const response = await put("/dashboards/promote", body);
     if (response.status !== 200) return alert("Error promoting user");
+    alert("User promoted");
     getCompanies();
   };
 
@@ -54,46 +53,86 @@ const Users = () => {
 
   return (
     <>
-      <h3>Users</h3>
-      <Button onClick={() => nav("/invite")} variant="contained" size="small">
-        Invite
-      </Button>
-      <br />
-      <Button onClick={() => nav("/profile")} variant="contained" size="small">
-        Profile
-      </Button>
-      <List
-      // sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      >
-        {userList.map((user, key) => (
-          <ListItem key={key}>
-            <ListItemText primary={user.email} />
-            <Select
-              id={user.email}
-              label="Role"
-              variant="outlined"
-              size="small"
-              defaultValue={user.role}
-              onChange={(e) => {
-                user.role = e.target.value;
+      <section className="sectionContainerUsers">
+        <h3>Users</h3>
+        <Button
+          style={{ marginTop: "5px", marginBottom: "5px" }}
+          onClick={() => nav("/profile")}
+          variant="contained"
+          size="small"
+        >
+          Profile
+        </Button>
+        <br />
+        <Button
+          onClick={() => nav("/invite")}
+          variant="contained"
+          size="small"
+          style={{ marginTop: "5px", marginBottom: "5px" }}
+        >
+          Invite
+        </Button>
+        <List
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            justifyContent: "space-between",
+            marginTop: "10px",
+          }}
+          // sx={{
+          //   display: "flex",
+          //   flexDirection: "column",
+          //   width: "100%",
+          //   justifyContent: "space-between",
+          // }}
+        >
+          {userList.map((user, key) => (
+            <ListItem
+              key={key}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "space-between",
+                padding: "0px",
+                marginTop: "5px",
+                marginBottom: "5px",
               }}
-              required
             >
-              <MenuItem value="owner">owner</MenuItem>
-              <MenuItem value="admin">admin</MenuItem>
-              <MenuItem value="user">user</MenuItem>
-              <MenuItem value="storekeeper">storekeeper</MenuItem>
-            </Select>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={() => promoteUser(user)}
-            >
-              Save
-            </Button>
-          </ListItem>
-        ))}
-      </List>
+              <TextField
+                value={user.email}
+                size="small"
+                label="Email"
+              ></TextField>
+              {/* <ListItemText primary={user.email} /> */}
+              <Select
+                id={user.email}
+                label="Role"
+                variant="outlined"
+                size="small"
+                defaultValue={user.role}
+                onChange={(e) => {
+                  user.role = e.target.value;
+                }}
+                required
+              >
+                <MenuItem value="owner">owner</MenuItem>
+                <MenuItem value="admin">admin</MenuItem>
+                <MenuItem value="user">user</MenuItem>
+                <MenuItem value="storekeeper">store</MenuItem>
+              </Select>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => promoteUser(user)}
+              >
+                Save
+              </Button>
+            </ListItem>
+          ))}
+        </List>
+      </section>
     </>
   );
 };

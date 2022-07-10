@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import "../css/Navbar.css";
 import React, { useEffect } from "react";
 import { useAuth } from "../providers/auth";
 import { useDetails } from "../providers/details";
@@ -12,22 +13,22 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <div className="nav-wrapper">
-          {userDetails ? (
-            <div>
-              {userDetails.username}
-              {companyDetails ? ` - ${companyDetails.name}` : ""}
-            </div>
-          ) : (
-            ""
-          )}
+        {userDetails ? (
+          <p>
+            {userDetails.username}
+            {companyDetails ? ` - ${companyDetails.name}` : ""}
+          </p>
+        ) : (
+          ""
+        )}
 
-          {token ? (
-            <Button onClick={logout}>Logout</Button>
-          ) : (
-            "You are not logged in"
-          )}
-        </div>
+        {token ? (
+          <Button onClick={logout} variant="contained" size="small">
+            Logout
+          </Button>
+        ) : (
+          "You are not logged in"
+        )}
       </nav>
     </>
   );

@@ -3,7 +3,7 @@ const itemSchema = require("./item");
 
 const orderSchema = new mongoose.Schema({
   orderedBy: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "User",
     required: true,
   },
