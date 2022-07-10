@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
   const myPlaintextPassword = req.body.password;
   const hash = users[0].password;
   const result = await bcrypt.compare(myPlaintextPassword, hash);
-  if (!result) return res.sendStatus(406);
+  if (!result) return res.sendStatus(400);
 
   console.log(users);
 
