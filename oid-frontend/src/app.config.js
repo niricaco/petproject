@@ -3,7 +3,9 @@ const _config = {
     oidapi: "http://localhost:8000/api",
   },
   prod: {
-    oidapi: process.env.REACT_APP_OIDAPI || "http://localhost:8080/api",
+    oidapi:
+      process.env.REACT_APP_OIDAPI ||
+      "https://plankton-app-kbvg9.ondigitalocean.app/api",
   },
 };
 

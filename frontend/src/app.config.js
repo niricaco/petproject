@@ -12,7 +12,9 @@ const _config = {
     },
   },
   prod: {
-    stockApi: process.env.REACT_APP_STOCKAPI || "https://app.niricaco.site/api",
+    stockApi:
+      process.env.REACT_APP_STOCKAPI ||
+      "https://lionfish-app-tph5g.ondigitalocean.app/api",
     google: {
       client_id:
         process.env.REACT_APP_CLIENT_ID ||
@@ -20,8 +22,10 @@ const _config = {
       base_url: "https://accounts.google.com/o/oauth2/v2/auth",
     },
     oid: {
-      client_id: "mycid",
-      base_url: "http://localhost:3000",
+      client_id: process.env.REACT_CLIENT_ID || "mycid",
+      base_url:
+        process.env.REACT_OID_BASE_URL ||
+        "https://seahorse-app-kxu8g.ondigitalocean.app/",
     },
   },
 };

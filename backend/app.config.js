@@ -19,7 +19,9 @@ const config = {
       clientSecret: process.env.OID_CLIENT_SECRET || "myclientsecret",
       redirectUri:
         process.env.OID_REDIRECT_URI || "http://localhost:3001/callback/oid",
-      tokenEndpoint: "http://localhost:8000/api/user/token",
+      tokenEndpoint:
+        process.env.TOKEN_ENDPOINT ||
+        "https://plankton-app-kbvg9.ondigitalocean.app/api/user/token",
       scope: "openid",
     },
 
