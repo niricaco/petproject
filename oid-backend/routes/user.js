@@ -14,7 +14,7 @@ router.post("/signup", async (req, res) => {
 
   // hash the password
   const myPlaintextPassword = `${req.body.password}`;
-  if (myPlaintextPassword.length < 4) return res.sendStatus(406);
+  if (myPlaintextPassword.length < 4) return res.sendStatus(400);
   const hashedPassword = await bcrypt.hash(myPlaintextPassword, saltRounds);
 
   await User.create({
