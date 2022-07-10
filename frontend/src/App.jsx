@@ -12,6 +12,7 @@ import Invite from "./pages/Invite";
 import Items from "./pages/Items";
 import Orders from "./pages/Orders";
 import NewItem from "./pages/NewItem";
+import NewOrder from "./pages/NewOrder";
 
 function App() {
   return (
@@ -66,6 +67,14 @@ function App() {
             element={
               <Protected>
                 <Orders />
+              </Protected>
+            }
+          />
+          <Route
+            path="/new-order"
+            element={
+              <Protected>
+                <NewOrder />
               </Protected>
             }
           />

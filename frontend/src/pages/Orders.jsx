@@ -16,7 +16,21 @@ const Orders = () => {
     navigate(path);
   };
 
-  return <div>Orders</div>;
+  return (
+    <>
+      <div>Orders</div>
+      <Button
+        onClick={() => nav("/new-order")}
+        variant="contained"
+        size="small"
+      >
+        New order
+      </Button>
+      <Button onClick={() => nav("/profile")} variant="contained" size="small">
+        Profile
+      </Button>
+    </>
+  );
 };
 
 export default Orders;
