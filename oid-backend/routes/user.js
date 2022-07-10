@@ -46,15 +46,11 @@ router.post("/login", async (req, res) => {
   const result = await bcrypt.compare(myPlaintextPassword, hash);
   if (!result) return res.sendStatus(400);
 
-  console.log(users);
-
   if (!users.length) return res.sendStatus(401);
 
   const client = await Client.findOne({ client_id: req.body.client });
 
   if (!client) return res.sendStatus(401);
-  console.log(client.redirect_uri);
-  console.log(req.body.redirectUri);
   if (client.redirect_uri !== req.body.redirectUri) return res.sendStatus(401);
 
   const code =
