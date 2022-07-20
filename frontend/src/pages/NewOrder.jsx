@@ -21,7 +21,7 @@ import "../css/NewOrder.css";
 
 const NewOrder = () => {
   const navigate = useNavigate();
-  const { userDetails, companyDetails, getCompanies } = useDetails();
+  const { userDetails, companyDetails, getCompanies, role } = useDetails();
   const { post } = stockApi();
 
   const nav = (path) => {
@@ -78,6 +78,7 @@ const NewOrder = () => {
         orderedBy: userDetails._id,
         email: userDetails.email,
         orderList,
+        confirmed: `${role === "user" ? false : true}`,
       },
     };
     const response = await post("/orders", body);
@@ -120,9 +121,7 @@ const NewOrder = () => {
         <div>New order</div>
         {orderList && orderList?.length > 0 ? (
           <div>
-            <List
-            // sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List>
               {orderList.map((item, key) => (
                 <ListItem
                   key={key}

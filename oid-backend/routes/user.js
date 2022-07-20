@@ -26,7 +26,6 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body);
   if (
     !req.body?.email ||
     !req.body?.password ||
@@ -41,12 +40,12 @@ router.post("/login", async (req, res) => {
     // password: req.body.password,
   });
 
+  if (!users.length) return res.sendStatus(401);
+
   const myPlaintextPassword = req.body.password;
-  const hash = users[0].password;
+  const hash = users[0]?.password;
   const result = await bcrypt.compare(myPlaintextPassword, hash);
   if (!result) return res.sendStatus(400);
-
-  if (!users.length) return res.sendStatus(401);
 
   const client = await Client.findOne({ client_id: req.body.client });
 
@@ -63,6 +62,8 @@ router.post("/login", async (req, res) => {
   });
 
   await client.save();
+
+  console.log(code);
 
   res.json({ code });
 });
@@ -90,6 +91,7 @@ router.post("/token", async (req, res) => {
   const token = jwt.sign({ sub: user.userId, header: user.email }, "shhhh", {
     expiresIn: "1h",
   });
+  console.log(token);
 
   res.json({ id_token: token });
 });

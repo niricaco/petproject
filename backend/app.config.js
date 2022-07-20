@@ -20,8 +20,7 @@ const config = {
       redirectUri:
         process.env.OID_REDIRECT_URI || "http://localhost:3001/callback/oid",
       tokenEndpoint:
-        process.env.TOKEN_ENDPOINT ||
-        "https://plankton-app-kbvg9.ondigitalocean.app/api/user/token",
+        process.env.TOKEN_ENDPOINT || "http://localhost:8000/api/user/token",
       scope: "openid",
     },
 

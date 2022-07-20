@@ -14,7 +14,7 @@ const corsOptions = {
   return req.hostname;
 }); */
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json()); // parse json what arrive in body
 app.use(morgan("tiny")); // use this middleware on every request
 /* app.use(morgan(":method :url :status - HOST: :host  - :response-time ms")); // use this middleware on every request */
