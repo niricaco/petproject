@@ -65,8 +65,6 @@ const DetailsProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDetails, companyDetails]);
 
-  console.log("role", role);
-
   const contextValue = {
     userDetails,
     setUserDetails,

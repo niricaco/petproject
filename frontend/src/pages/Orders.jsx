@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const Orders = () => {
   const navigate = useNavigate();
-  const { userDetails, companyDetails, getCompanies } = useDetails();
+  const { userDetails, companyDetails, getCompanies, role } = useDetails();
   const { post } = stockApi();
 
   const nav = (path) => {
@@ -95,10 +95,10 @@ const Orders = () => {
                 >
                   <TextField
                     id="outlined-basic"
-                    label="Order ID"
+                    label="Ordered By"
                     variant="outlined"
-                    value={order._id}
-                    defaultValue={order._id}
+                    value={order.email}
+                    defaultValue={order.email}
                     style={{ width: "40%", marginRight: "5px" }}
                   />
                   <TextField
@@ -131,15 +131,12 @@ const Orders = () => {
                   style={{ width: "10%", marginRight: "5px" }}
                 /> */}
                   <Button
-                    onClick={() => {
-                      post(`/orders/${order.id}/confirm`);
-                      getCompanies();
-                    }}
+                    onClick={() => {}}
                     variant="contained"
                     size="small"
                     style={{ marginTop: "5px", marginBottom: "5px" }}
                   >
-                    Confirm
+                    View
                   </Button>
                 </ListItem>
               );
@@ -151,26 +148,47 @@ const Orders = () => {
         {confirmedOrders.length > 0 ? (
           <>
             <h3>Confirmed orders</h3>
-            {confirmedOrders.map((order, key) => (
-              <ListItem
-                key={key}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  width: "100%",
-                  justifyContent: "space-between",
-                  padding: "0px",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                <TextField
-                  value={order.email}
-                  size="small"
-                  label="Email"
-                ></TextField>
-              </ListItem>
-            ))}
+            {role !== "user"
+              ? confirmedOrders.map((order, key) => (
+                  <ListItem
+                    key={key}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      width: "100%",
+                      justifyContent: "space-between",
+                      padding: "0px",
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    <TextField
+                      id="outlined-basic"
+                      label="Ordered By"
+                      variant="outlined"
+                      value={order.email}
+                      defaultValue={order.email}
+                      style={{ width: "50%", marginRight: "5px" }}
+                    />
+                    <TextField
+                      id="outlined-basic"
+                      label="Order date"
+                      variant="outlined"
+                      value={order.orderDate}
+                      defaultValue={order.orderDate}
+                      style={{ width: "50%", marginRight: "5px" }}
+                    />
+                    <Button
+                      onClick={() => {}}
+                      variant="contained"
+                      size="small"
+                      style={{ marginTop: "5px", marginBottom: "5px" }}
+                    >
+                      View
+                    </Button>
+                  </ListItem>
+                ))
+              : ""}
           </>
         ) : (
           ""
